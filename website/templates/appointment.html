@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Запись на прием
+{% endblock %}
+
+{% block meta_description %}Запись на прием в стоматологию{% endblock %}"
+
+{% block content %}
+<!-- ***** Breadcrumb Area Start ***** -->
+  <div class="breadcumb-area bg-img bg-gradient-overlay" style="background-image: url({% static 'website/img/bg-img/12.jpg' %});">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-12">
+          <h2 class="title">Запись на прием</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="breadcumb--con">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home' %}"><i class="fa fa-home"></i>Главная</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Запись на прием</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
+
+<center>
+    <h1>Проверьте информацию</h1>
+    <strong>Имя: </strong>{{ your_name }}<br>
+    <strong>Телефон: </strong>{{ your_phone }}<br>
+    <strong>Email: </strong>{{ your_email }}<br>
+    <strong>Адрес: </strong>{{ your_address }}<br>
+    <strong>Желаемое ремя: </strong>{{ your_schedule }}<br>
+    <strong>Дата: </strong>{{ your_date }}<br>
+    <strong>Ваш коментарий: </strong>{{ your_message }}<br>
+
+    <br><br>
+    <strong>Примечание: </strong>Текст примечания при отправкт.
+    </center>
+
+    <br><br><br>
+
+
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,9 @@
+*.pyc
+*.bak
+*.dat
+*.dir
+.idea
+**/__pycache__
+**/migrations
+*.sqlite3
+Procfile
