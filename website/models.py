@@ -97,6 +97,7 @@ class Contact(models.Model):
 
     class Meta:
         verbose_name = 'Контактная информация'
+        verbose_name_plural = 'Контактная информация'
 
     def __str__(self):
         return f'{self.address} {self.phone}'
@@ -125,10 +126,13 @@ class AboutUs(models.Model):
                               verbose_name='Изображение')
     title = models.CharField(max_length=128, verbose_name='Название')
     content = models.TextField(verbose_name='Описание')
-    bars = models.ManyToManyField('Bar')
 
     class Meta:
         verbose_name = 'О нас'
+        verbose_name_plural = 'О нас'
+
+    def __str__(self):
+        return 'о нас'
 
     def save(self, *args, **kwargs):
         if not self.id and AboutUs.objects.exists():  # if not self.id нужно для редактирования
@@ -168,8 +172,16 @@ class News(models.Model):
 
 
 class Bar(models.Model):
+    about_us = models.ForeignKey(AboutUs,
+                                 on_delete=models.CASCADE,
+                                 editable=False)
     text = models.CharField(max_length=64, verbose_name="текст")
     percent = models.CharField(max_length=2, verbose_name='Заполненно на х %')
 
     def __str__(self):
         return self.text
+
+    def save(self, *args, **kwargs):  # задает связь FK сразу на единственный AboutUs
+        if not self.about_us:
+            self.about_us = AboutUs.objects.latest('id')
+        return super(Bar, self).save(*args, **kwargs)
