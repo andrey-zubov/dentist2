@@ -1,5 +1,6 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.core.mail import send_mail
+from django.contrib.auth import authenticate, login, logout
 from .models import User, Service, AboutUs, DoctorCard, Mention, News, Appointment
 
 from datetime import datetime
@@ -16,6 +17,24 @@ def home(request):
                                          'services': services,
                                          'mentions': mentions,
                                          'news': news})
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user:
+            login(request, user)
+            return redirect('home')
+        else:
+            err = 'Введите верный пароль или зарегистрируйтесь'
+            return render(request, template_name='auth.html', context={'err': err})
+    return render(request, template_name='auth.html', context={})
+
+
+def registration(request):
+    return HttpResponse(1)
 
 
 def contact(request):

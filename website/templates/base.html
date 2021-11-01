@@ -91,7 +91,12 @@
             </div>
 
             <!-- Booking Now Button -->
-            <a href="{% url 'booknow' %}" class="btn dento-btn booking-btn">Записаться на прием</a>
+            {% if user.is_authenticated %}
+              <a href="{% url 'booknow' %}" class="btn dento-btn booking-btn">Записаться на прием</a>
+            {% else %}
+              <a href="{% url 'login_page' %}" class="btn dento-btn booking-btn">Войти</a>
+              <a href="{% url 'registration_page' %}" class="btn dento-btn booking-btn">Зарегистрироваться</a>
+            {% endif %}
           </nav>
         </div>
       </div>

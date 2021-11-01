@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Вход в систему
+{% endblock %}
+
+{% block meta_description %}Страница аунтефикции{% endblock %}"
+
+{% block content %}
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="contact-form text-center">
+          <h2>login</h2>
+          <form action="{% url 'login_page' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-12">
+                <input name="username" type="text" placeholder="login">
+              </div>
+              <div class="col-12">
+                <input name="password" type="password" placeholder="password">
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn dento-btn">Войти</button>
+              </div>
+            </div>
+          </form>
+          {% if err %}
+            Введите верный пароль или <a href="{% url 'registration_page' %}">зарегистрируйтесь</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
