@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse
 from django.core.mail import send_mail
-from .models import Service, AboutUs, DoctorCard, Mention, News
+from .models import User, Service, AboutUs, DoctorCard, Mention, News, Appointment
+
+from datetime import datetime
 
 
 def home(request):
@@ -49,25 +51,32 @@ def pricing(request):
 
 
 def appointment(request):
+    print(request.POST)
     if request.method == "POST":
         your_name = request.POST['your-name']
         your_phone = request.POST['your-phone']
         your_email = request.POST['your-email']
         your_address = request.POST['your-address']
-        your_schedule = request.POST['your-schedule']
-        your_date = request.POST['your-date']
         your_message = request.POST['your-message']
+        your_time = datetime.strptime(request.POST['your-time'], '%H:%M')
+        your_date = datetime.strptime(request.POST['your-date'], '%Y-%m-%d')
+
 
         ### Send an Email Start ###
-        appointment = "Name: " + your_name + " Phone: " + your_phone + " Email: " + your_email + " Address: " + your_address + " Schedule: " + your_schedule + " Date: " + your_date + " Message: " + your_message
-
-        send_mail(
-            'Appointment Request', # subject
-            appointment, # message
-            your_email, # from email
-            ['omarfaruk2468@gmail.com'], # To email
-            # ['omarfaruk2468@gmail.com','mehedibinhafiz@gmail.com'], # To email
+        new_appointment = Appointment.objects.create(
+            date=your_date,
+            time=your_time,
+            service=Service.objects.latest('id'),
+            client=User.objects.latest('id'),
         )
+        new_appointment.save()
+        # send_mail(
+        #     'Appointment Request', # subject
+        #     appointment, # message
+        #     your_email, # from email
+        #     ['omarfaruk2468@gmail.com'], # To email
+        #     # ['omarfaruk2468@gmail.com','mehedibinhafiz@gmail.com'], # To email
+        # )
         ### Send an Email End ###
 
         return render(request, 'appointment.html', {
@@ -75,8 +84,8 @@ def appointment(request):
             'your_phone':your_phone,
             'your_email':your_email,
             'your_address':your_address,
-            'your_schedule':your_schedule,
-            'your_date':your_date,
+            'your_schedule': None,
+            'your_date': None,
             'your_message': your_message
         })
 

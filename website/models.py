@@ -60,10 +60,6 @@ class Service(models.Model):
 
 
 class Appointment(models.Model):
-    number = models.CharField(max_length=7,
-                              unique=True,
-                              editable=False,
-                              verbose_name='Уникальный идентификатор услуги')
     register_date = models.DateTimeField(auto_now_add=True,
                                          editable=False,
                                          verbose_name='дата и время регистрации услуги')
