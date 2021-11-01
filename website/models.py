@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
+from django.shortcuts import reverse
 
 
 class User(AbstractUser):  # переопределение стандартной модели User
@@ -46,7 +47,7 @@ class Service(models.Model):
                               verbose_name='Изображение')
     title = models.CharField(max_length=155, verbose_name='Название')
     content = models.TextField(verbose_name='Описание')
-    pirce = models.DecimalField(decimal_places=2,
+    price = models.DecimalField(decimal_places=2,
                                verbose_name='стоимость',
                                max_digits=7)
 
@@ -92,8 +93,7 @@ class Contact(models.Model):
     email = models.EmailField(verbose_name='Почта/email',
                               unique=False,
                               blank=False)
-    map_iframe = models.TextField(help_text="ссылка на встраивание карт по шаблону: "
-                                            "<iframe src='https://www.google.com/maps/embed...")
+    map_iframe = models.TextField(help_text="ссылка на встраивание карт по шаблону: <iframe src=...")
 
     class Meta:
         verbose_name = 'Контактная информация'
@@ -162,6 +162,7 @@ class Mention(models.Model):
 class News(models.Model):
     title = models.CharField(max_length=128, verbose_name='Заголовок')
     content = models.TextField(verbose_name='Текст новости')
+    publish_date = models.DateField(editable=False, auto_now_add=True)
 
     class Meta:
         verbose_name = 'Новость'
@@ -170,18 +171,5 @@ class News(models.Model):
     def __str__(self):
         return self.title
 
-
-class Bar(models.Model):
-    about_us = models.ForeignKey(AboutUs,
-                                 on_delete=models.CASCADE,
-                                 editable=False)
-    text = models.CharField(max_length=64, verbose_name="текст")
-    percent = models.CharField(max_length=2, verbose_name='Заполненно на х %')
-
-    def __str__(self):
-        return self.text
-
-    def save(self, *args, **kwargs):  # задает связь FK сразу на единственный AboutUs
-        if not self.about_us:
-            self.about_us = AboutUs.objects.latest('id')
-        return super(Bar, self).save(*args, **kwargs)
+    def get_absolute_url(self):
+        return reverse('single_news_page', kwargs={'id': self.id})

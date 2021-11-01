@@ -1,11 +1,19 @@
 from django.shortcuts import render, HttpResponse
-from django.core.mail import send_mail # for mail send we need to import it
-from .models import Service
+from django.core.mail import send_mail
+from .models import Service, AboutUs, DoctorCard, Mention, News
 
-# Create your views here.
 
 def home(request):
-    return render(request, 'home.html', {})
+    about_us = AboutUs.objects.latest('id')
+    doctors = DoctorCard.objects.all()
+    services = Service.objects.all()
+    mentions = Mention.objects.all().reverse()[:3]
+    news = News.objects.all().reverse()[:3]
+    return render(request, 'home.html', {'about_us': about_us,
+                                         'doctors': doctors,
+                                         'services': services,
+                                         'mentions': mentions,
+                                         'news': news})
 
 
 def contact(request):
@@ -78,3 +86,7 @@ def appointment(request):
 
 def booknow(request):
     return render(request, 'booknow.html')
+
+
+def single_news(request, id):
+    return HttpResponse(1)

@@ -55,6 +55,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -100,6 +101,7 @@ AUTH_USER_MODEL = 'website.User'  # т.к. мы переопределили с�
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
+SHORT_DATETIME_FORMAT = 'd/m/Y'
 
 USE_I18N = True
 
