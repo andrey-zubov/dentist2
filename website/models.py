@@ -37,6 +37,10 @@ class User(AbstractUser):  # переопределение стандартно
                                   blank=True,
                                   help_text='Пустое поле если отчества нет')
 
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
     def __str__(self):
         return f'{self.first_name} {self.last_name} {self.patronymic}, почта: {self.email}'
 
@@ -114,6 +118,10 @@ class DoctorCard(models.Model):
     description = models.TextField(verbose_name='Описание')
     specialization = models.CharField(verbose_name='специалтзация',
                                       max_length=64)
+
+    class Meta:
+        verbose_name = 'Карточка врача'
+        verbose_name_plural = 'Карточки врачей'
 
 
 class AboutUs(models.Model):
