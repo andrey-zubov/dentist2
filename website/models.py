@@ -20,6 +20,7 @@ class User(AbstractUser):  # переопределение стандартно
                                blank=True,
                                verbose_name='Физический адресс клиента')
     phone = models.CharField(max_length=18,
+                             unique=True,
                              verbose_name='Номер телефона',
                              help_text='Телефон в формате +375291234567')
     email = models.EmailField(verbose_name='Почта/email',

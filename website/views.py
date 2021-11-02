@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Q
+
 from .models import User, Service, AboutUs, DoctorCard, Mention, News, Appointment
 
 from datetime import datetime
@@ -29,12 +31,35 @@ def login_view(request):
             return redirect('home')
         else:
             err = 'Введите верный пароль или зарегистрируйтесь'
-            return render(request, template_name='auth.html', context={'err': err})
-    return render(request, template_name='auth.html', context={})
+            return render(request, 'auth.html', {'err': err})
+    return render(request, 'auth.html', {})
 
 
 def registration(request):
-    return HttpResponse(1)
+    print(request.POST)
+    if request.method == 'POST':
+        if request.POST['password1'] == request.POST['password2']:
+            if User.objects.filter(
+                    Q(username=request.POST['username']) |
+                    Q(phone=request.POST['phone']) |
+                    Q(email=request.POST['email'])).exists():
+                err = 'Такой пользователь или телефон/email уже зарегистрированы'
+                return render(request, 'registration.html', {'err': err})
+
+            new_user = User.objects.create_user(
+                username=request.POST['username'],
+                password=request.POST['password1'],
+                address=request.POST['address'],
+                phone=request.POST['phone'],
+                first_name=request.POST['first_name'],
+                last_name=request.POST['last_name'],
+                patronymic=request.POST['patronymic'],
+                email=request.POST['email'],
+            )
+            new_user.save()
+
+        err = 'Пароли должны совпадать'
+    return render(request, 'registration.html', {})
 
 
 def contact(request):

@@ -2,9 +2,10 @@ from django.contrib import admin
 
 from .models import (Service, Appointment, Contact,
                      DoctorCard, AboutUs, Mention,
-                     News,)
+                     News, User)
 
 
+admin.site.register(User)
 admin.site.register(Appointment)
 admin.site.register(Service)
 admin.site.register(Contact)
