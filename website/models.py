@@ -76,6 +76,8 @@ class Appointment(models.Model):
     client = models.ForeignKey(User,
                                on_delete=models.CASCADE,
                                verbose_name='Клиент')
+    client_comment = models.TextField(null=True,
+                                      verbose_name='Комментарий клиента')
 
     class Meta:
         verbose_name = 'Визит к врачу'

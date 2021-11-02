@@ -36,7 +36,6 @@ def login_view(request):
 
 
 def registration(request):
-    print(request.POST)
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
             if User.objects.filter(
@@ -82,13 +81,16 @@ def contact(request):
     else:
         return render(request, 'contact.html', {})
 
+
 def about(request):
     return render(request, 'about.html', {})
 
-def service(request):
-    service = Service.objects.all()
 
-    return render(request, 'service.html', {'service':service})
+def service(request):
+    services = Service.objects.all()
+
+    return render(request, 'service.html', {'service': services})
+
 
 def pricing(request):
     return render(request, 'pricing.html', {})
@@ -97,21 +99,19 @@ def pricing(request):
 def appointment(request):
     print(request.POST)
     if request.method == "POST":
-        your_name = request.POST['your-name']
-        your_phone = request.POST['your-phone']
-        your_email = request.POST['your-email']
-        your_address = request.POST['your-address']
-        your_message = request.POST['your-message']
-        your_time = datetime.strptime(request.POST['your-time'], '%H:%M')
-        your_date = datetime.strptime(request.POST['your-date'], '%Y-%m-%d')
+        message = request.POST['message']
+        time = datetime.strptime(request.POST['time'], '%H:%M')
+        date = datetime.strptime(request.POST['date'], '%Y-%m-%d')
+        serv = Service.objects.get(id=request.POST['service'])
+        client = request.user
 
-
-        ### Send an Email Start ###
         new_appointment = Appointment.objects.create(
-            date=your_date,
-            time=your_time,
-            service=Service.objects.latest('id'),
-            client=User.objects.latest('id'),
+            date=date,
+            time=time,
+            service=serv,
+            client=client,
+            client_comment=message
+
         )
         new_appointment.save()
         # send_mail(
@@ -123,15 +123,7 @@ def appointment(request):
         # )
         ### Send an Email End ###
 
-        return render(request, 'appointment.html', {
-            'your_name':your_name,
-            'your_phone':your_phone,
-            'your_email':your_email,
-            'your_address':your_address,
-            'your_schedule': None,
-            'your_date': None,
-            'your_message': your_message
-        })
+        return render(request, 'appointment.html', {})
 
     else:
         return render(request, 'home.html', {})
