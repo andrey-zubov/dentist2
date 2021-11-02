@@ -134,4 +134,5 @@ def booknow(request):
 
 
 def single_news(request, id):
-    return HttpResponse(1)
+    news = News.objects.get(id=id)
+    return render(request, 'news.html', {'news': news})
