@@ -54,8 +54,7 @@
               <h2>О нас</h2>
               <div class="line"></div>
             </div>
-            <p>Vestibulum condimentum, risus sedones honcus rutrum, salah lacus mollis zurna, nec finibusmi velit advertisis. Proin vitae odin quis magna aliquet laciniae. Etiam auctor, nisi vel. Pellentesque ultrices nisl quam iaculis, nec pulvinar
-              augue.</p>
+            <p>{{ about_us.content }}</p>
 
             <!-- Single Skills Area -->
             <div class="single-skills-area mt-30">
@@ -152,67 +151,22 @@
       </div>
 
       <div class="row">
-        <!-- Single Dentist Area -->
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="single-dentist-area mb-100">
-            <img src="{% static 'website/img/bg-img/9.png' %}" alt="">
-            <!-- Dentist Content -->
-            <div class="dentist-content">
-              <!-- Social Info -->
-              <div class="dentist-social-info">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-google-plus"></i></a>
-              </div>
-              <!-- Dentist Info -->
-              <div class="dentist-info bg-gradient-overlay">
-                <h5>Loers Ipsum</h5>
-                <p>Специализация</p>
+        {% for doc in doctors %}
+          <!-- Single Dentist Area -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="single-dentist-area mb-100">
+              <img src="{{ doc.image.url }}" alt="" width="400" height="400">
+              <!-- Dentist Content -->
+              <div class="dentist-content">
+                <!-- Dentist Info -->
+                <div class="dentist-info bg-gradient-overlay">
+                  <h5>{{ doc.name }}</h5>
+                  <p>{{ doc.specialization }}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- Single Dentist Area -->
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="single-dentist-area mb-100">
-            <img src="{% static 'website/img/bg-img/9.png' %}" alt="">
-            <!-- Dentist Content -->
-            <div class="dentist-content">
-              <!-- Social Info -->
-              <div class="dentist-social-info">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-google-plus"></i></a>
-              </div>
-              <!-- Dentist Info -->
-              <div class="dentist-info bg-gradient-overlay">
-                <h5>Loers Ipsum</h5>
-                <p>Специализация</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Single Dentist Area -->
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="single-dentist-area mb-100">
-            <img src="{% static 'website/img/bg-img/9.png' %}" alt="">
-            <!-- Dentist Content -->
-            <div class="dentist-content">
-              <!-- Social Info -->
-              <div class="dentist-social-info">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-google-plus"></i></a>
-              </div>
-              <!-- Dentist Info -->
-              <div class="dentist-info bg-gradient-overlay">
-                <h5>Loers Ipsum</h5>
-                <p>Специализация</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        {% endfor %}
       </div>
     </div>
   </section>
@@ -225,49 +179,23 @@
         <div class="col-12">
           <!-- Testimonials Slides -->
           <div class="testimonials-slides owl-carousel">
-            <!-- Single Testimonials Slide -->
-            <div class="single-testimonial-slide d-flex align-items-center">
-              <!-- Thumbnail -->
-              <div class="testimonial-thumb">
-                <img src="{% static 'website/img/bg-img/8.jpg' %}" alt="">
+            {% for mention in mentions %}
+              <!-- Single Testimonials Slide -->
+              <div class="single-testimonial-slide d-flex align-items-center">
+                <!-- Thumbnail -->
+                {% if mention.img %}
+                  <div class="testimonial-thumb">
+                    <img src="{{ mention.image.url }}" alt="">
+                  </div>
+                {% endif %}
+                <!-- Content -->
+                <div class="testimonial-content">
+                  <h5>{{ mention.content }}</h5>
+                  <h6>{{ mention.name }}</h6>
+                  <p>{{ mention.description }}</p>
+                </div>
               </div>
-              <!-- Content -->
-              <div class="testimonial-content">
-                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
-                <h6>Loers Ipsum</h6>
-                <p>Loers Ipsum</p>
-              </div>
-            </div>
-          <!-- Testimonials Slides -->
-          <div class="testimonials-slides owl-carousel">
-            <!-- Single Testimonials Slide -->
-            <div class="single-testimonial-slide d-flex align-items-center">
-              <!-- Thumbnail -->
-              <div class="testimonial-thumb">
-                <img src="{% static 'website/img/bg-img/8.jpg' %}" alt="">
-              </div>
-              <!-- Content -->
-              <div class="testimonial-content">
-                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
-                <h6>Loers Ipsum</h6>
-                <p>Loers Ipsum</p>
-              </div>
-            </div>
-          <!-- Testimonials Slides -->
-          <div class="testimonials-slides owl-carousel">
-            <!-- Single Testimonials Slide -->
-            <div class="single-testimonial-slide d-flex align-items-center">
-              <!-- Thumbnail -->
-              <div class="testimonial-thumb">
-                <img src="{% static 'website/img/bg-img/8.jpg' %}" alt="">
-              </div>
-              <!-- Content -->
-              <div class="testimonial-content">
-                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
-                <h6>Loers Ipsum</h6>
-                <p>Loers Ipsum</p>
-              </div>
-            </div>
+            {% endfor %}
 
           </div>
         </div>

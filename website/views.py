@@ -83,7 +83,12 @@ def contact(request):
 
 
 def about(request):
-    return render(request, 'about.html', {})
+    about_us = AboutUs.objects.latest('id')
+    doctors = DoctorCard.objects.all()
+    mentions = Mention.objects.all().reverse()[:3]
+    return render(request, 'about.html', {'about_us': about_us,
+                                          'doctors': doctors,
+                                          'mentions': mentions})
 
 
 def service(request):
