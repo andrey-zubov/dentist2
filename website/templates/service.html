@@ -67,49 +67,23 @@
         <div class="col-12">
           <!-- Testimonials Slides -->
           <div class="testimonials-slides owl-carousel">
-            <!-- Single Testimonials Slide -->
-            <div class="single-testimonial-slide d-flex align-items-center">
-              <!-- Thumbnail -->
-              <div class="testimonial-thumb">
-                <img src="{% static 'website/img/bg-img/8.jpg' %}" alt="">
+            {% for mention in mentions %}
+              <!-- Single Testimonials Slide -->
+              <div class="single-testimonial-slide d-flex align-items-center">
+                <!-- Thumbnail -->
+                {% if mention.img %}
+                  <div class="testimonial-thumb">
+                    <img src="{{ mention.image.url }}" alt="">
+                  </div>
+                {% endif %}
+                <!-- Content -->
+                <div class="testimonial-content">
+                  <h5>{{ mention.content }}</h5>
+                  <h6>{{ mention.name }}</h6>
+                  <p>{{ mention.description }}</p>
+                </div>
               </div>
-              <!-- Content -->
-              <div class="testimonial-content">
-                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
-                <h6>Loers Ipsum</h6>
-                <p>Loers Ipsum</p>
-              </div>
-            </div>
-          <!-- Testimonials Slides -->
-          <div class="testimonials-slides owl-carousel">
-            <!-- Single Testimonials Slide -->
-            <div class="single-testimonial-slide d-flex align-items-center">
-              <!-- Thumbnail -->
-              <div class="testimonial-thumb">
-                <img src="{% static 'website/img/bg-img/8.jpg' %}" alt="">
-              </div>
-              <!-- Content -->
-              <div class="testimonial-content">
-                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
-                <h6>Loers Ipsum</h6>
-                <p>Loers Ipsum</p>
-              </div>
-            </div>
-          <!-- Testimonials Slides -->
-          <div class="testimonials-slides owl-carousel">
-            <!-- Single Testimonials Slide -->
-            <div class="single-testimonial-slide d-flex align-items-center">
-              <!-- Thumbnail -->
-              <div class="testimonial-thumb">
-                <img src="{% static 'website/img/bg-img/8.jpg' %}" alt="">
-              </div>
-              <!-- Content -->
-              <div class="testimonial-content">
-                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
-                <h6>Loers Ipsum</h6>
-                <p>Loers Ipsum</p>
-              </div>
-            </div>
+            {% endfor %}
 
           </div>
         </div>
@@ -132,57 +106,25 @@
       </div>
 
       <div class="row">
-        <!-- Single Blog Item -->
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="single-blog-item mb-100">
-            <a href="#">
-              <img src="{% static 'website/img/bg-img/2.jpg' %}" alt="">
-            </a>
-            <!-- Blog Content -->
-            <div class="blog-content">
-              <a href="#" class="post-title">Lores Ipsum</a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-              <div class="post-meta">
-                <a href="#"><i class="icon_clock_alt"></i>01.01.2025</a>
-<!--                <a href="#"><i class="icon_chat_alt"></i> 3 Comments</a>-->
+        {% for n in news %}
+          <!-- Single Blog Item -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="single-blog-item mb-100">
+              <a href="#">
+                <img src="{% static 'website/img/bg-img/2.jpg' %}" alt="">
+              </a>
+              <!-- Blog Content -->
+              <div class="blog-content">
+                <a href="{{n.get_absolute_url}}" class="post-title">{{n.title}}</a>
+                <p>{{n.content}}</p>
+                <div class="post-meta">
+                  <i class="icon_clock_alt"></i>{{n.publish_date}}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- Single Blog Item -->
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="single-blog-item mb-100">
-            <a href="#">
-              <img src="{% static 'website/img/bg-img/2.jpg' %}" alt="">
-            </a>
-            <!-- Blog Content -->
-            <div class="blog-content">
-              <a href="#" class="post-title">Lores Ipsum</a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-              <div class="post-meta">
-                <a href="#"><i class="icon_clock_alt"></i>01.01.2025</a>
-<!--                <a href="#"><i class="icon_chat_alt"></i> 3 Comments</a>-->
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Single Blog Item -->
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="single-blog-item mb-100">
-            <a href="#">
-              <img src="{% static 'website/img/bg-img/2.jpg' %}" alt="">
-            </a>
-            <!-- Blog Content -->
-            <div class="blog-content">
-              <a href="#" class="post-title">Lores Ipsum</a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-              <div class="post-meta">
-                <a href="#"><i class="icon_clock_alt"></i>01.01.2025</a>
-<!--                <a href="#"><i class="icon_chat_alt"></i> 3 Comments</a>-->
-              </div>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
+
       </div>
     </div>
   </section>

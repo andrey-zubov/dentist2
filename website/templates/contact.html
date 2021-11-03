@@ -51,7 +51,7 @@
       <div class="row">
         <div class="col-12">
           <div class="google-maps mb-100">
-            <iframe src=".74https://www.google.com/maps/"
+            <iframe src="{{ contact_info.map_iframe }}"
               allowfullscreen></iframe>
           </div>
         </div>
@@ -61,15 +61,15 @@
         <!-- Contact Information -->
         <div class="col-12 col-md-4">
           <div class="contact-information">
-            <h5>Адресс</h5>
-            <p>г.Минск, улица Короля 2а</p>
+            <h5>Адрес</h5>
+            <p>{{ contact_info.address }}</p>
 
             <h5>Тел</h5>
-            <p>+375291234567</p>
+            <p>{{ contact_info.phone }}</p>
 
 
             <h5>Email</h5>
-            <p class="mb-0">mail@example.com</p>
+            <p class="mb-0">{{ contact_info.email }}</p>
           </div>
         </div>
 
@@ -83,14 +83,17 @@
             </div>
             <!-- Form -->
             <form action="{% url 'contact' %}" method="post">  <!-- urls.py have a name contact -->
-                {% csrf_token %}
+              {% csrf_token %}
               <div class="row">
-                <div class="col-lg-6">
-                  <input type="text" name="message-name" class="form-control mb-30" placeholder="Имя">
-                </div>
-                <div class="col-lg-6">
-                  <input type="email" name="message-email" class="form-control mb-30" placeholder="Email">
-                </div>
+                {% if not user.is_authenticated %}
+                  <div class="col-lg-6">
+                    <input type="text" name="message-name" class="form-control mb-30" placeholder="Имя">
+                  </div>
+                  <div class="col-lg-6">
+                    <input type="email" name="message-email" class="form-control mb-30" placeholder="Email">
+                  </div>
+                {% endif %}
+
                 <div class="col-12">
                   <textarea name="message" class="form-control mb-30" placeholder="Текст сообщения"></textarea>
                 </div>

@@ -55,31 +55,18 @@
               <thead>
                 <tr>
                   <th scope="col">Услуга</th>
-                  <th scope="col">Количество этапов</th>
+                  <th scope="col">Описание</th>
                   <th scope="col">Цена</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">Удаление</th>
-                  <td>1 прием</td>
-                  <td>97 BYN</td>
-                </tr>
-                <tr>
-                  <th scope="row">Удаление</th>
-                  <td>1 прием</td>
-                  <td>97 BYN</td>
-                </tr>
-                <tr>
-                  <th scope="row">Удаление</th>
-                  <td>1 прием</td>
-                  <td>97 BYN</td>
-                </tr>
-                <tr>
-                  <th scope="row">Удаление</th>
-                  <td>1 прием</td>
-                  <td>97 BYN</td>
-                </tr>
+                {% for serv in services %}
+                  <tr>
+                    <th scope="row">{{ serv.title }}</th>
+                    <td>{{ serv.content }}</td>
+                    <td>{{ serv.price }} BYN</td>
+                  </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -87,7 +74,7 @@
 
         <div class="col-12">
           <div class="more-btn text-center mt-50">
-            <a href="#" class="btn dento-btn">Подробности <i class="fa fa-angle-double-right"></i></a>
+            <a href="{% url 'service' %}" class="btn dento-btn">Подробности <i class="fa fa-angle-double-right"></i></a>
           </div>
         </div>
       </div>

@@ -19,10 +19,9 @@ class User(AbstractUser):  # переопределение стандартно
     address = models.TextField(null=True,
                                blank=True,
                                verbose_name='Физический адресс клиента')
-    phone = models.CharField(max_length=18,
+    phone = models.CharField(max_length=32,
                              unique=True,
-                             verbose_name='Номер телефона',
-                             help_text='Телефон в формате +375291234567')
+                             verbose_name='Номер телефона')
     email = models.EmailField(verbose_name='Почта/email',
                               unique=True,
                               blank=False)
@@ -50,11 +49,11 @@ class Service(models.Model):
                               blank=True,
                               null=True,
                               verbose_name='Изображение')
-    title = models.CharField(max_length=155, verbose_name='Название')
+    title = models.CharField(max_length=168, verbose_name='Название')
     content = models.TextField(verbose_name='Описание')
     price = models.DecimalField(decimal_places=2,
-                               verbose_name='стоимость',
-                               max_digits=7)
+                                verbose_name='стоимость',
+                                max_digits=16)
 
     class Meta:
         verbose_name = 'Услуга'
@@ -90,13 +89,12 @@ class Appointment(models.Model):
 class Contact(models.Model):
     address = models.CharField(max_length=256,
                                verbose_name='адрес')
-    phone = models.CharField(max_length=18,
-                             verbose_name='Номер телефона',
-                             help_text='Телефон в формате +375291234567')
+    phone = models.CharField(max_length=32,
+                             verbose_name='Номер телефона')
     email = models.EmailField(verbose_name='Почта/email',
                               unique=False,
                               blank=False)
-    map_iframe = models.TextField(help_text="ссылка на встраивание карт по шаблону: <iframe src=...")
+    map_iframe = models.TextField(help_text="ссылка на встраивание карт")
 
     class Meta:
         verbose_name = 'Контактная информация'

@@ -3,7 +3,9 @@ from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 
-from .models import User, Service, AboutUs, DoctorCard, Mention, News, Appointment
+from .models import (User, Service, AboutUs,
+                     DoctorCard, Mention, News,
+                     Appointment, Contact)
 
 from datetime import datetime
 
@@ -76,10 +78,11 @@ def contact(request):
         )
         ### Send an Email End ###
 
-        return render(request, 'contact.html', {'message_name':message_name})
+        return render(request, 'contact.html', {'message_name': message_name})
 
     else:
-        return render(request, 'contact.html', {})
+        contact_info = Contact.objects.latest('id')
+        return render(request, 'contact.html', {'contact_info': contact_info})
 
 
 def about(request):
@@ -93,12 +96,16 @@ def about(request):
 
 def service(request):
     services = Service.objects.all()
-
-    return render(request, 'service.html', {'service': services})
+    mentions = Mention.objects.all().reverse()[:3]
+    news = News.objects.all().reverse()[:3]
+    return render(request, 'service.html', {'service': services,
+                                            'mentions': mentions,
+                                            'news': news})
 
 
 def pricing(request):
-    return render(request, 'pricing.html', {})
+    services = Service.objects.all()
+    return render(request, 'pricing.html', {'services': services})
 
 
 def appointment(request):
@@ -135,7 +142,8 @@ def appointment(request):
 
 
 def booknow(request):
-    return render(request, 'booknow.html')
+    serv = Service.objects.all()
+    return render(request, 'booknow.html', {'services': serv})
 
 
 def single_news(request, id):
