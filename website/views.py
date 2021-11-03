@@ -58,6 +58,8 @@ def registration(request):
                 email=request.POST['email'],
             )
             new_user.save()
+            login(request, new_user)
+            return redirect('home')
 
         err = 'Пароли должны совпадать'
     return render(request, 'registration.html', {})
@@ -135,7 +137,12 @@ def appointment(request):
         # )
         ### Send an Email End ###
 
-        return render(request, 'appointment.html', {})
+        return render(request, 'appointment.html', {'your_name': client.first_name,
+                                                    'your_message': message,
+                                                    'your_phone': client.phone,
+                                                    'your_email': client.email,
+                                                    'your_time': time,
+                                                    'your_date': date})
 
     else:
         return render(request, 'home.html', {})
