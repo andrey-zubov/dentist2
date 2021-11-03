@@ -5,5 +5,4 @@
 .idea
 **/__pycache__
 **/migrations
-*.sqlite3
 Procfile
