@@ -37,6 +37,11 @@ def login_view(request):
     return render(request, 'auth.html', {})
 
 
+def logout_view(request):
+    logout(request)
+    return redirect('home')
+
+
 def registration(request):
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
