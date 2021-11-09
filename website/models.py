@@ -154,6 +154,8 @@ class Mention(models.Model):
     name = models.CharField(max_length=64, verbose_name="Имя")
     description = models.CharField(max_length=32,
                                    verbose_name='Описание клиента',
+                                   null=True,
+                                   blank=True,
                                    help_text='пример: "удаление зубов')
 
     class Meta:

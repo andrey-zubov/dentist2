@@ -71,25 +71,23 @@ def registration(request):
 
 
 def contact(request):
+    print(request.POST)
     if request.method == "POST":
-        message_name = request.POST['message-name']  # here message-name comes from contact.html file's input type name
-        message_email = request.POST['message-email']
+        if 'message-name' in request.POST:
+            message_name = request.POST['message-name']
+            message_email = request.POST['message-email']
+        else:
+            message_name = request.user.first_name
+            message_email = request.user.email
         message = request.POST['message']
 
-        ### Send an Email Start ###
-        send_mail(
-            message_name, # subject
-            message, # message
-            message_email, # from email
-            ['omarfaruk2468@gmail.com','mehedibinhafiz@gmail.com',], # To email
-        )
-        ### Send an Email End ###
+        new_mention = Mention.objects.create(content=message,
+                                             name=message_name)
+        new_mention.save()
 
-        return render(request, 'contact.html', {'message_name': message_name})
 
-    else:
-        contact_info = Contact.objects.latest('id')
-        return render(request, 'contact.html', {'contact_info': contact_info})
+    contact_info = Contact.objects.latest('id')
+    return render(request, 'contact.html', {'contact_info': contact_info})
 
 
 def about(request):
