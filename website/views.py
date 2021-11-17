@@ -135,8 +135,8 @@ def appointment(request):
         #     'Appointment Request', # subject
         #     appointment, # message
         #     your_email, # from email
-        #     ['omarfaruk2468@gmail.com'], # To email
-        #     # ['omarfaruk2468@gmail.com','mehedibinhafiz@gmail.com'], # To email
+        #     ['iii2468@gmail.com'], # To email
+        #     # ['aaaaa@gmail.com','bbbb@gmail.com'], # To email
         # )
         ### Send an Email End ###
 
