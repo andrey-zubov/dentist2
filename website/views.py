@@ -159,3 +159,8 @@ def booknow(request):
 def single_news(request, id):
     news = News.objects.get(id=id)
     return render(request, 'news.html', {'news': news})
+
+
+def cabinet(request, id):
+    user_appointment = Appointment.objects.filter(client_id=id)
+    return render(request, 'cabinet.html', {'user_appointment': user_appointment})
