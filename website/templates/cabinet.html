@@ -27,7 +27,7 @@
         <div class="col-12">
           <!-- Client Cabinet Form -->
           <div class="appointment-form">
-            <form action="#" method="post">
+            <form action="" method="post">
               {% csrf_token %}
               <div class="row">
                 <!-- Personal info -->
@@ -36,17 +36,17 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="name" type="text" class="form-control" placeholder="Имя">
+                    <input name="name" type="text" class="form-control" placeholder="Имя" value="{{user.first_name}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="surname" type="text" class="form-control" placeholder="Фамилия">
+                    <input name="surname" type="text" class="form-control" placeholder="Фамилия" value="{{user.last_name}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="patronymic" type="text" class="form-control" placeholder="Отчество">
+                    <input name="patronymic" type="text" class="form-control" placeholder="Отчество" value="{{user.patronymic}}">
                   </div>
                 </div>
                 <!-- Contact Info -->
@@ -55,17 +55,17 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="email" type="email" class="form-control" placeholder="почта">
+                    <input name="email" type="email" class="form-control" placeholder="почта" value="{{user.email}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="tel" type="text" class="form-control" placeholder="номер телефона">
+                    <input name="tel" type="text" class="form-control" placeholder="номер телефона" value="{{user.phone}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="address" type="text" class="form-control" placeholder="адрес">
+                    <input name="address" type="text" class="form-control" placeholder="адрес" value="{{user.address}}">
                   </div>
                 </div>
                 <div class="col-12 text-center">
@@ -88,10 +88,9 @@
 
     <div class="row">
         <div class="col-12">
-          <!-- Client Cabinet Form -->
+          <!-- Client appointments -->
           <div class="appointment-form">
             <div class="row">
-              <!-- Personal info -->
               <div class="col-12">
                 <h3>Мои записи к врачу</h3>
               </div>
@@ -121,59 +120,6 @@
                   {% endfor %}
                 </table>
               </div>
-
-<!--                <div class="row">-->
-<!--                  <div class="col-md-4">-->
-<!--                    <div class="col-md-6">-->
-<!--                      <h6>Дата приема</h6>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-6">-->
-<!--                      {{a.date}}-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="col-md-4">-->
-<!--                    <div class="col-md-6">-->
-<!--                      <h6>Время приема</h6>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-6">-->
-<!--                      {{a.time}}-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="col-md-4">-->
-<!--                    <div class="col-md-6">-->
-<!--                      <h6>Услуга</h6>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-6">-->
-<!--                      {{a.service}}-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="col-md-4">-->
-<!--                    <div class="col-md-6">-->
-<!--                      <h6>Лечащий врач</h6>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-6">-->
-<!--                      {{a.doctor}}-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="col-md-8">-->
-<!--                    <div class="col-md-6">-->
-<!--                      <h6>Ваш коментарий</h6>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-6">-->
-<!--                      {{a.client_comment}}-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-
-
-
-
-<!--              <div class="col-md-4">-->
-<!--                <div class="form-group mb-30">-->
-<!--                  <input name="name" type="text" class="form-control" placeholder="Имя">-->
-<!--                </div>-->
-<!--              </div>-->
-
             </div>
           </div>
         </div>
