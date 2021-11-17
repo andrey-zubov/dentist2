@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 
-from .models import (User, Service, AboutUs,
+from .models import (User, Client, Service, AboutUs,
                      DoctorCard, Mention, News,
                      Appointment, Contact)
 
@@ -43,11 +43,11 @@ def logout_view(request):
 
 
 def registration(request):
+    err = None
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
             if User.objects.filter(
                     Q(username=request.POST['username']) |
-                    Q(phone=request.POST['phone']) |
                     Q(email=request.POST['email'])).exists():
                 err = 'Такой пользователь или телефон/email уже зарегистрированы'
                 return render(request, 'registration.html', {'err': err})
@@ -55,19 +55,22 @@ def registration(request):
             new_user = User.objects.create_user(
                 username=request.POST['username'],
                 password=request.POST['password1'],
+                email=request.POST['email'],
+            )
+            new_client = Client.objects.create(
                 address=request.POST['address'],
-                phone=request.POST['phone'],
                 first_name=request.POST['first_name'],
                 last_name=request.POST['last_name'],
                 patronymic=request.POST['patronymic'],
+                user=new_user,
                 email=request.POST['email'],
+                phone=request.POST['phone']
             )
-            new_user.save()
             login(request, new_user)
             return redirect('home')
 
         err = 'Пароли должны совпадать'
-    return render(request, 'registration.html', {})
+    return render(request, 'registration.html', {'err': err})
 
 
 def contact(request):
@@ -120,7 +123,7 @@ def appointment(request):
         time = datetime.strptime(request.POST['time'], '%H:%M')
         date = datetime.strptime(request.POST['date'], '%Y-%m-%d')
         serv = Service.objects.get(id=request.POST['service'])
-        client = request.user
+        client = Client.objects.get(user_id=request.user.id)
 
         new_appointment = Appointment.objects.create(
             date=date,
@@ -161,17 +164,30 @@ def single_news(request, id):
     return render(request, 'news.html', {'news': news})
 
 
-def cabinet(request, id):
-    user = User.objects.get(id=id)
-    if user.position == 'client':
+def cabinet(request, user_id):
+    if Client.objects.filter(user_id=user_id).exists():
         if request.method == 'POST':
             return HttpResponse('post')
-        user_appointment = Appointment.objects.filter(client=user)
-        return render(request, 'cabinet.html', {'user_appointment': user_appointment})
+        client = Client.objects.get(user_id=user_id)
+        user_appointment = Appointment.objects.filter(client=client)
+        return render(request, 'cabinet.html', {'client': client,
+                                                'user_appointment': user_appointment})
 
-    elif user.position == 'doctor':
-        return render(request, 'doctor_cabinet.html')
+    elif DoctorCard.objects.filter(user_id=user_id).exists():
+        doctor = DoctorCard.objects.get(user_id=user_id)
+        user_appointment = Appointment.objects.filter(doctor=doctor)
+        return render(request, 'doctor_cabinet.html', {'doctor': doctor,
+                                                       'user_appointment': user_appointment})
 
-    elif user.position == 'doctor':
-        pass
+    # if user.position == 'client':
+    #     if request.method == 'POST':
+    #         return HttpResponse('post')
+    #     user_appointment = Appointment.objects.filter(client=user)
+    #     return render(request, 'cabinet.html', {'user_appointment': user_appointment})
+    #
+    # elif user.position == 'doctor':
+    #     return render(request, 'doctor_cabinet.html')
+    #
+    # elif user.position == 'doctor':
+    #     pass
 

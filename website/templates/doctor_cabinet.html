@@ -36,17 +36,17 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="name" type="text" class="form-control" placeholder="Имя" value="{{user.first_name}}">
+                    <input name="name" type="text" class="form-control" placeholder="Имя" value="{{doctor.first_name}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="surname" type="text" class="form-control" placeholder="Фамилия" value="{{user.last_name}}">
+                    <input name="surname" type="text" class="form-control" placeholder="Фамилия" value="{{doctor.last_name}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="patronymic" type="text" class="form-control" placeholder="Отчество" value="{{user.patronymic}}">
+                    <input name="patronymic" type="text" class="form-control" placeholder="Отчество" value="{{doctor.patronymic}}">
                   </div>
                 </div>
                 <!-- Contact Info -->
@@ -55,17 +55,22 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="email" type="email" class="form-control" placeholder="почта" value="{{user.email}}">
+                    <input name="email" type="email" class="form-control" placeholder="почта" value="{{doctor.email}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="tel" type="text" class="form-control" placeholder="номер телефона" value="{{user.phone}}">
+                    <input name="tel" type="text" class="form-control" placeholder="номер телефона" value="{{doctor.phone}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="address" type="text" class="form-control" placeholder="адрес" value="{{user.address}}">
+                    <input name="specialization" type="text" class="form-control" placeholder="специализация" value="{{doctor.specialization}}">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group mb-30">
+                    <input name="description" type="text" class="form-control" placeholder="описание" value="{{doctor.description}}">
                   </div>
                 </div>
                 <div class="col-12 text-center">
@@ -78,13 +83,6 @@
       </div>
       <!-- Client Cabinet Form End -->
 
-    <div class="row">
-      <div class="col-12">
-        <div class="text-center white">
-          <h1>Мои записи</h1>
-        </div>
-      </div>
-    </div>
 
     <div class="row">
       <div class="col-12">
@@ -92,7 +90,7 @@
         <div class="appointment-form">
           <div class="row">
             <div class="col-12">
-              <h3>Мои записи к врачу</h3>
+              <h3>Мои приемы</h3>
             </div>
             <div class="dento-price-table table-responsive">
               <table class="table table-borderless mb-0">
@@ -101,9 +99,8 @@
                     <th scope="col">Дата приема</th>
                     <th scope="col">Время приема</th>
                     <th scope="col">Услуга</th>
-<!--                      <th scope="col">Врач</th>-->
-                    <th scope="col">Цена</th>
-                    <th scope="col">Ваш коментарий</th>
+                    <th scope="col">Пациент</th>
+                    <th scope="col">Комментарий пациента</th>
                   </tr>
                 </thead>
                 {% for a in user_appointment %}
@@ -112,8 +109,7 @@
                       <th scope="row">{{a.date}}</th>
                       <th scope="row">{{a.time}}</th>
                       <th scope="row">{{a.service}}</th>
-<!--                        <th scope="row">{{a.doctor}}</th>-->
-                      <th scope="row">{{a.service.price}}</th>
+                      <th scope="row">{{a.client}}</th>
                       <th scope="row">{{a.client_comment}}</th>
                     </tr>
                   </tbody>

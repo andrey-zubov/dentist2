@@ -1,49 +1,73 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 from django.shortcuts import reverse
 
 
-class User(AbstractUser):  # переопределение стандартной модели User
-    POSITION_CHOICES = [
-        ('client', 'Клиент'),
-        ('administrator', 'Администратор'),
-        ('doctor', 'Врач')
-    ]
-    position = models.CharField(max_length=32,
-                                choices=POSITION_CHOICES,
-                                default='client',
-                                verbose_name='Класс пользователя',
-                                help_text='По умолчанию - клиент')
+
+class Client(models.Model):
+    user = models.OneToOneField(User,
+                                on_delete=models.CASCADE)
+    phone = models.CharField(max_length=32,
+                             verbose_name='Номер телефона',
+                             unique=True)
+    email = models.EmailField(verbose_name='Почта/email',
+                              unique=True)
     address = models.TextField(null=True,
                                blank=True,
                                verbose_name='Физический адресс клиента')
-    phone = models.CharField(max_length=32,
-                             unique=True,
-                             verbose_name='Номер телефона')
-    email = models.EmailField(verbose_name='Почта/email',
-                              unique=True,
-                              blank=False)
-    first_name = models.CharField(verbose_name='Имя',
-                                  max_length=30,
-                                  blank=False)
-    last_name = models.CharField(verbose_name='Фамилия',
-                                 max_length=30,
-                                 blank=False)
-    patronymic = models.CharField(verbose_name='Отчество',
-                                  max_length=30,
-                                  blank=True,
-                                  help_text='Пустое поле если отчества нет')
-
-    class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
+    first_name = models.CharField(max_length=128,
+                                  verbose_name='Имя')
+    last_name = models.CharField(max_length=128,
+                                 verbose_name='Фамилия')
+    patronymic = models.CharField(max_length=128,
+                                  verbose_name='Отчсество',
+                                  null=True,
+                                  blank=True)
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} {self.patronymic}, почта: {self.email}'
+        return f'{self.last_name} {self.first_name} {self.patronymic}'
 
     def go_to_cabinet(self):
-        return reverse('cabinet_page', kwargs={'id': self.id})
+        return reverse('cabinet_page', kwargs={'id': self.user_id})
+
+
+class DoctorCard(models.Model):
+    user = models.OneToOneField(User,
+                                on_delete=models.CASCADE)
+    phone = models.CharField(max_length=32,
+                             verbose_name='Номер телефона',
+                             null=True,
+                             blank=True)
+    email = models.EmailField(verbose_name='Почта/email',
+                              null=True,
+                              blank=False)
+    first_name = models.CharField(max_length=128,
+                            verbose_name='Имя')
+    last_name = models.CharField(max_length=128,
+                               verbose_name='Фамилия')
+    patronymic = models.CharField(max_length=128,
+                                  verbose_name='Отчсество',
+                                  null=True,
+                                  blank=True)
+    image = models.ImageField(upload_to='website/',
+                              blank=True,
+                              null=True,
+                              verbose_name='Изображение')
+    description = models.TextField(verbose_name='Описание')
+    specialization = models.CharField(verbose_name='специалтзация',
+                                      max_length=64)
+
+    def __str__(self):
+        return f'{self.last_name} {self.first_name} {self.patronymic}'
+
+    def go_to_cabinet(self):
+        return reverse('cabinet_page', kwargs={'id': self.user_id})
+
+    class Meta:
+        verbose_name = 'Карточка врача'
+        verbose_name_plural = 'Карточки врачей'
+
 
 
 class Service(models.Model):
@@ -56,6 +80,7 @@ class Service(models.Model):
     price = models.DecimalField(decimal_places=2,
                                 verbose_name='стоимость',
                                 max_digits=16)
+
 
     class Meta:
         verbose_name = 'Услуга'
@@ -74,9 +99,12 @@ class Appointment(models.Model):
     service = models.ForeignKey(Service,
                                 on_delete=models.CASCADE,
                                 verbose_name="Услугп")
-    client = models.ForeignKey(User,
+    client = models.ForeignKey(Client,
                                on_delete=models.CASCADE,
                                verbose_name='Клиент')
+    doctor = models.ForeignKey(DoctorCard,
+                               on_delete=models.CASCADE,
+                               verbose_name='Врач')
     client_comment = models.TextField(null=True,
                                       verbose_name='Комментарий клиента')
 
@@ -110,49 +138,6 @@ class Contact(models.Model):
             raise ValidationError('Может быть только одна модель контактов')
         return super(Contact, self).save(*args, **kwargs)
 
-
-class DoctorCard(models.Model):
-    user = models.OneToOneField(User,
-                                on_delete=models.CASCADE)
-
-    name = models.CharField(max_length=128,
-                            verbose_name='Имя',
-                            null=True,
-                            blank=True)
-    surname = models.CharField(max_length=128,
-                               verbose_name='Фамилия',
-                               null=True,
-                               blank=True)
-    patronymic = models.CharField(max_length=128,
-                                  verbose_name='Отчсество',
-                                  null=True,
-                                  blank=True)
-    image = models.ImageField(upload_to='website/',
-                              blank=True,
-                              null=True,
-                              verbose_name='Изображение')
-    description = models.TextField(verbose_name='Описание')
-    specialization = models.CharField(verbose_name='специалтзация',
-                                      max_length=64)
-
-    def __str__(self):
-        return f'{self.surname} {self.name} {self.patronymic}'
-
-    def save(self, *args, **kwargs):
-        print(self.user.position)
-        if self.user.position != 'client':
-            if not self.name:
-                self.name = self.user.first_name
-            if not self.surname:
-                self.surname = self.user.last_name
-            if not self.patronymic:
-                self.patronymic = self.user.patronymic
-            return super(DoctorCard, self).save(*args, **kwargs)
-        raise ValueError('Клиент не может быть врачем')
-
-    class Meta:
-        verbose_name = 'Карточка врача'
-        verbose_name_plural = 'Карточки врачей'
 
 
 class AboutUs(models.Model):
