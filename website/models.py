@@ -7,9 +7,8 @@ from django.shortcuts import reverse
 class User(AbstractUser):  # переопределение стандартной модели User
     POSITION_CHOICES = [
         ('client', 'Клиент'),
-        ('employee', 'Сотрудник'),
         ('administrator', 'Администратор'),
-        ('Doctor', 'Врач')
+        ('doctor', 'Врач')
     ]
     position = models.CharField(max_length=32,
                                 choices=POSITION_CHOICES,
@@ -42,6 +41,9 @@ class User(AbstractUser):  # переопределение стандартно
 
     def __str__(self):
         return f'{self.first_name} {self.last_name} {self.patronymic}, почта: {self.email}'
+
+    def go_to_cabinet(self):
+        return reverse('cabinet_page', kwargs={'id': self.id})
 
 
 class Service(models.Model):
@@ -110,14 +112,43 @@ class Contact(models.Model):
 
 
 class DoctorCard(models.Model):
+    user = models.OneToOneField(User,
+                                on_delete=models.CASCADE)
+
+    name = models.CharField(max_length=128,
+                            verbose_name='Имя',
+                            null=True,
+                            blank=True)
+    surname = models.CharField(max_length=128,
+                               verbose_name='Фамилия',
+                               null=True,
+                               blank=True)
+    patronymic = models.CharField(max_length=128,
+                                  verbose_name='Отчсество',
+                                  null=True,
+                                  blank=True)
     image = models.ImageField(upload_to='website/',
                               blank=True,
                               null=True,
                               verbose_name='Изображение')
-    name = models.CharField(max_length=128, verbose_name='Имя')
     description = models.TextField(verbose_name='Описание')
     specialization = models.CharField(verbose_name='специалтзация',
                                       max_length=64)
+
+    def __str__(self):
+        return f'{self.surname} {self.name} {self.patronymic}'
+
+    def save(self, *args, **kwargs):
+        print(self.user.position)
+        if self.user.position != 'client':
+            if not self.name:
+                self.name = self.user.first_name
+            if not self.surname:
+                self.surname = self.user.last_name
+            if not self.patronymic:
+                self.patronymic = self.user.patronymic
+            return super(DoctorCard, self).save(*args, **kwargs)
+        raise ValueError('Клиент не может быть врачем')
 
     class Meta:
         verbose_name = 'Карточка врача'

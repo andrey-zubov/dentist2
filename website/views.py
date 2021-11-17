@@ -162,8 +162,16 @@ def single_news(request, id):
 
 
 def cabinet(request, id):
-    if request.method == 'POST':
-        return HttpResponse('post')
+    user = User.objects.get(id=id)
+    if user.position == 'client':
+        if request.method == 'POST':
+            return HttpResponse('post')
+        user_appointment = Appointment.objects.filter(client=user)
+        return render(request, 'cabinet.html', {'user_appointment': user_appointment})
 
-    user_appointment = Appointment.objects.filter(client_id=id)
-    return render(request, 'cabinet.html', {'user_appointment': user_appointment})
+    elif user.position == 'doctor':
+        return render(request, 'doctor_cabinet.html')
+
+    elif user.position == 'doctor':
+        pass
+
