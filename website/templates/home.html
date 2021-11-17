@@ -266,6 +266,16 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-30">
+                      <select name="doctor" class="form-control">
+                        <option>Выберите врача</option>
+                        {% for doctor in doctors %}
+                          <option value="{{doctor.id}}">{{doctor}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group mb-30">
                       <input name="time" type="time" class="form-control">
                     </div>
                   </div>

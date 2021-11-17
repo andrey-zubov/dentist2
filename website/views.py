@@ -5,7 +5,7 @@ from django.db.models import Q
 
 from .models import (User, Client, Service, AboutUs,
                      DoctorCard, Mention, News,
-                     Appointment, Contact)
+                     Appointment, Contact, Administrator)
 
 from datetime import datetime
 
@@ -123,6 +123,7 @@ def appointment(request):
         time = datetime.strptime(request.POST['time'], '%H:%M')
         date = datetime.strptime(request.POST['date'], '%Y-%m-%d')
         serv = Service.objects.get(id=request.POST['service'])
+        doctor = DoctorCard.objects.get(id=request.POST['doctor'])
         client = Client.objects.get(user_id=request.user.id)
 
         new_appointment = Appointment.objects.create(
@@ -130,8 +131,8 @@ def appointment(request):
             time=time,
             service=serv,
             client=client,
-            client_comment=message
-
+            client_comment=message,
+            doctor=doctor
         )
         new_appointment.save()
         # send_mail(
@@ -156,7 +157,9 @@ def appointment(request):
 
 def booknow(request):
     serv = Service.objects.all()
-    return render(request, 'booknow.html', {'services': serv})
+    doctors = DoctorCard.objects.all()
+    return render(request, 'booknow.html', {'services': serv,
+                                            'doctors': doctors})
 
 
 def single_news(request, id):
@@ -178,6 +181,10 @@ def cabinet(request, user_id):
         user_appointment = Appointment.objects.filter(doctor=doctor)
         return render(request, 'doctor_cabinet.html', {'doctor': doctor,
                                                        'user_appointment': user_appointment})
+
+    elif Administrator.objects.filter(user_id=user_id).exists():
+
+        return render(request, 'administrator_cabinet.html', {})
 
     # if user.position == 'client':
     #     if request.method == 'POST':

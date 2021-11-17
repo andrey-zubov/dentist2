@@ -1,8 +1,21 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.shortcuts import reverse
 
+
+class Administrator(models.Model):
+    user = models.OneToOneField(User,
+                                on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        self.user.is_staff = True
+        self.user.user_permissions.set(Permission.objects.all().exclude(codename='delete_user'))
+        self.user.save()
+        super(Administrator, self).save(*args, **kwargs)
+
+    def go_to_cabinet(self):
+        return reverse('cabinet_page', kwargs={'id': self.user_id})
 
 
 class Client(models.Model):
@@ -24,6 +37,10 @@ class Client(models.Model):
                                   verbose_name='Отчсество',
                                   null=True,
                                   blank=True)
+
+    def delete(self, using=None, keep_parents=False):
+
+        return super().delete(using, keep_parents)
 
     def __str__(self):
         return f'{self.last_name} {self.first_name} {self.patronymic}'
