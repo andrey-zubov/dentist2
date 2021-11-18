@@ -13,7 +13,9 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('registration/', views.registration, name='registration_page'),
     path('cabinet/<int:user_id>', views.cabinet, name='cabinet_page'),
-    path('single_news/<int:id>', views.single_news, name='single_news_page'),
-
+    path('single_news/<int:id>', views.single_news, name='single_news_page')
+    ,
+    path('test', views.chat_main, name='chat_main'),
+    path('chat/<str:room_name>/', views.room, name='chat_room'),
 
 ]
