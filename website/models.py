@@ -62,9 +62,9 @@ class DoctorCard(models.Model):
                               null=True,
                               blank=False)
     first_name = models.CharField(max_length=128,
-                            verbose_name='Имя')
+                                  verbose_name='Имя')
     last_name = models.CharField(max_length=128,
-                               verbose_name='Фамилия')
+                                 verbose_name='Фамилия')
     patronymic = models.CharField(max_length=128,
                                   verbose_name='Отчсество',
                                   null=True,
