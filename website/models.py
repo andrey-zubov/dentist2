@@ -37,6 +37,9 @@ class Client(models.Model):
                                   verbose_name='Отчсество',
                                   null=True,
                                   blank=True)
+    special_message = models.TextField(null=True,
+                                       blank=True,
+                                       verbose_name='Специальное сообзение от администрации')
 
     def delete(self, using=None, keep_parents=False):
         return super().delete(using, keep_parents)
@@ -85,8 +88,14 @@ class DoctorCard(models.Model):
         verbose_name_plural = 'Карточки врачей'
 
 
-
 class Service(models.Model):
+    class Meta:
+        verbose_name = 'Услуга'
+        verbose_name_plural = 'Услуги'
+
+    def __str__(self):
+        return self.title
+
     image = models.ImageField(upload_to='website/',
                               blank=True,
                               null=True,
@@ -96,14 +105,6 @@ class Service(models.Model):
     price = models.DecimalField(decimal_places=2,
                                 verbose_name='стоимость',
                                 max_digits=16)
-
-
-    class Meta:
-        verbose_name = 'Услуга'
-        verbose_name_plural = 'Услуги'
-
-    def __str__(self):
-        return self.title
 
 
 class Appointment(models.Model):
