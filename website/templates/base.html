@@ -98,15 +98,16 @@
       <div class="row">
         <!-- Single Footer Widget -->
         <div class="col-12 col-sm-6 col-lg-4">
-          <div class="single-footer-widget">
-            <a href="./home.html" class="d-block mb-4"><img src="{% static 'website/img/core-img/logo.png' %}" alt=""></a>
-            <p>Наша стоматология лучшая в мире.</p>
-            <div class="footer-contact">
-              <p><i class="icon_pin"></i>адресс</p>
-              <p><i class="icon_phone"></i>88005553535</p>
-              <p><i class="icon_mail"></i>stomatolog@example.ru</p>
+          {% for clinic in about_us %}
+            <div class="single-footer-widget">
+            <h5 class="widget-title">{{ clinic.title }}</h5>
+              <div class="footer-contact">
+                <p><i class="icon_pin"></i>{{ clinic.address}}</p>
+                <p><i class="icon_phone"></i>{{ clinic.phone }}</p>
+                <p><i class="icon_mail"></i>{{ clinic.email }}</p>
+              </div>
             </div>
-          </div>
+          {% endfor %}
         </div>
 
         <!-- Single Footer Widget -->
@@ -120,7 +121,17 @@
               <li><span>Пн-Пт</span> <span>8.00-18.00</span></li>
               <li><span>Сб</span> <span>9.00-17.00</span></li>
               <li><span>Вс</span> <span>10.00-17.00</span></li>
-              <li><span>Праздничные дни</span> <span>Закрыто</span></li>
+            </ul>
+          </div>
+          <div class="single-footer-widget">
+            <!-- Widget Title -->
+            <h5 class="widget-title">Время работы</h5>
+
+            <!-- Opening Hours -->
+            <ul class="opening-hours">
+              <li><span>Пн-Пт</span> <span>8.00-18.00</span></li>
+              <li><span>Сб</span> <span>9.00-17.00</span></li>
+              <li><span>Вс</span> <span>10.00-17.00</span></li>
             </ul>
           </div>
         </div>

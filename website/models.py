@@ -39,7 +39,7 @@ class Client(models.Model):
                                   blank=True)
 
     def delete(self, using=None, keep_parents=False):
-
+        r
         return super().delete(using, keep_parents)
 
     def __str__(self):
@@ -133,7 +133,13 @@ class Appointment(models.Model):
         return f'{self.id} {self.date} {self.time} {self.client}'
 
 
-class Contact(models.Model):
+class AboutUs(models.Model):
+    image = models.ImageField(upload_to='website/',
+                              blank=True,
+                              null=True,
+                              verbose_name='Изображение')
+    title = models.CharField(max_length=128, verbose_name='Название')
+    content = models.TextField(verbose_name='Описание')
     address = models.CharField(max_length=256,
                                verbose_name='адрес')
     phone = models.CharField(max_length=32,
@@ -144,38 +150,11 @@ class Contact(models.Model):
     map_iframe = models.TextField(help_text="ссылка на встраивание карт")
 
     class Meta:
-        verbose_name = 'Контактная информация'
-        verbose_name_plural = 'Контактная информация'
+        verbose_name = 'клиника'
+        verbose_name_plural = 'клиники'
 
     def __str__(self):
-        return f'{self.address} {self.phone}'
-
-    def save(self, *args, **kwargs):
-        if not self.id and Contact.objects.exists():  # if not self.id нужно для редактирования
-            raise ValidationError('Может быть только одна модель контактов')
-        return super(Contact, self).save(*args, **kwargs)
-
-
-
-class AboutUs(models.Model):
-    image = models.ImageField(upload_to='website/',
-                              blank=True,
-                              null=True,
-                              verbose_name='Изображение')
-    title = models.CharField(max_length=128, verbose_name='Название')
-    content = models.TextField(verbose_name='Описание')
-
-    class Meta:
-        verbose_name = 'О нас'
-        verbose_name_plural = 'О нас'
-
-    def __str__(self):
-        return 'о нас'
-
-    def save(self, *args, **kwargs):
-        if not self.id and AboutUs.objects.exists():  # if not self.id нужно для редактирования
-            raise ValidationError('Может быть только одна модель О нас')
-        return super(AboutUs, self).save(*args, **kwargs)
+        return self.title
 
 
 class Mention(models.Model):
