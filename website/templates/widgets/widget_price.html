@@ -1,0 +1,48 @@
+ {% load static %}
+
+<!-- Dento Pricing Table Area Start -->
+  <section class="dento-pricing-table-area section-padding-100">
+    <div class="container">
+      <div class="row">
+        <!-- Section Heading -->
+        <div class="col-12">
+          <div class="section-heading text-center">
+            <h2>Цены</h2>
+            <div class="line"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="dento-price-table table-responsive">
+            <table class="table table-borderless mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">Услуга</th>
+                  <th scope="col">Описание</th>
+                  <th scope="col">Цена</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for serv in services %}
+                  <tr>
+                    <th scope="row">{{ serv.title }}</th>
+                    <td>{{ serv.content }}</td>
+                    <td>{{ serv.price }} RUB</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="more-btn text-center mt-50">
+            <a href="{% url 'service' %}" class="btn dento-btn">Подробности <i class="fa fa-angle-double-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Dento Pricing Table Area End -->

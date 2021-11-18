@@ -144,7 +144,8 @@ def appointment(request):
             service=serv,
             client=client,
             client_comment=message,
-            doctor=doctor
+            doctor=doctor,
+            clinic_id=request.POST['clinic']
         )
         new_appointment.save()
         # send_mail(
@@ -162,7 +163,7 @@ def appointment(request):
                                                     'your_email': client.email,
                                                     'your_time': time,
                                                     'your_date': date,
-                                                    'about_us': about_us,})
+                                                    'about_us': about_us})
 
     else:
         return render(request, 'home.html', {'about_us': about_us,})

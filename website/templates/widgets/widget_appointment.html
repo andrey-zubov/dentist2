@@ -1,0 +1,79 @@
+ {% load static %}
+
+  <!-- Book An Oppointment Area Start -->
+  {% if user.is_authenticated %}
+    <section class="book-an-oppointment-area section-padding-100 bg-img bg-gradient-overlay jarallax clearfix" style="background-image: url({% static 'website/img/bg-img/12.jpg' %});">
+      <div class="container">
+        <div class="row">
+          <!-- Section Heading -->
+          <div class="col-12">
+            <div class="section-heading text-center white">
+              <h2>Записаться на прием</h2>
+              <div class="line"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <!-- Appointment Form -->
+            <div class="appointment-form">
+              <form action="{% url 'appointment' %}" method="post">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="form-group mb-30">
+                      <select name="clinic" class="form-control">
+                        <option>Выберите клинику</option>
+                        {% for clinic in about_us %}
+                          <option value="{{clinic.id}}">{{clinic.title}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group mb-30">
+                      <select name="service" class="form-control">
+                        <option>Выберите услугу</option>
+                        {% for serv in services %}
+                          <option value="{{serv.id}}">{{serv.title}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group mb-30">
+                      <select name="doctor" class="form-control">
+                        <option>Выберите врача</option>
+                        {% for doctor in doctors %}
+                          <option value="{{doctor.id}}">{{doctor}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group mb-30">
+                      <input name="time" type="time" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group mb-30">
+                      <input name="date" type="date" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group mb-30">
+                      <textarea name="message" class="form-control" placeholder="Ваш коментарий"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-12 text-center">
+                    <button type="submit" class="btn dento-btn">Записаться</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+  <!-- Book An Oppointment Area End -->

@@ -1,0 +1,32 @@
+ {% load static %}
+<!-- ***** Testimonials Area Start ***** -->
+  <section class="testimonials-area section-padding-100 bg-img bg-gradient-overlay jarallax clearfix" style="background-image: url({% static 'website/img/bg-img/7.jpg' %});">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <!-- Testimonials Slides -->
+          <div class="testimonials-slides owl-carousel">
+            {% for mention in mentions %}
+              <!-- Single Testimonials Slide -->
+              <div class="single-testimonial-slide d-flex align-items-center">
+                <!-- Thumbnail -->
+                {% if mention.img %}
+                  <div class="testimonial-thumb">
+                    <img src="{{ mention.image.url }}" alt="">
+                  </div>
+                {% endif %}
+                <!-- Content -->
+                <div class="testimonial-content">
+                  <h5>{{ mention.content }}</h5>
+                  <h6>{{ mention.name }}</h6>
+                  <p>{{ mention.description }}</p>
+                </div>
+              </div>
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ***** Testimonials Area End ***** -->

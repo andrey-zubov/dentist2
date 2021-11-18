@@ -137,71 +137,10 @@
   </section>
   <!-- Cool Facts Area End -->
 
-  <!-- ***** Dento Dentist Area Start ***** -->
-  <section class="dentist-area section-padding-100-0">
-    <div class="container">
-      <div class="row">
-        <!-- Section Heading -->
-        <div class="col-12">
-          <div class="section-heading text-center">
-            <h2>Наши врачи</h2>
-            <div class="line"></div>
-          </div>
-        </div>
-      </div>
+    <!-- Include dento -->
+  {% include 'widgets/widget_dentists.html' %}
 
-      <div class="row">
-        {% for doc in doctors %}
-          <!-- Single Dentist Area -->
-          <div class="col-12 col-sm-6 col-md-4">
-            <div class="single-dentist-area mb-100">
-              <img src="{{ doc.image.url }}" alt="" width="400" height="400">
-              <!-- Dentist Content -->
-              <div class="dentist-content">
-                <!-- Dentist Info -->
-                <div class="dentist-info bg-gradient-overlay">
-                  <h5>{{ doc.name }}</h5>
-                  <p>{{ doc.specialization }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-  <!-- ***** Dento Dentist Area End ***** -->
-
-  <!-- ***** Testimonials Area Start ***** -->
-  <section class="testimonials-area section-padding-100 bg-img bg-gradient-overlay jarallax clearfix" style="background-image: url({% static 'website/img/bg-img/7.jpg' %});">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <!-- Testimonials Slides -->
-          <div class="testimonials-slides owl-carousel">
-            {% for mention in mentions %}
-              <!-- Single Testimonials Slide -->
-              <div class="single-testimonial-slide d-flex align-items-center">
-                <!-- Thumbnail -->
-                {% if mention.img %}
-                  <div class="testimonial-thumb">
-                    <img src="{{ mention.image.url }}" alt="">
-                  </div>
-                {% endif %}
-                <!-- Content -->
-                <div class="testimonial-content">
-                  <h5>{{ mention.content }}</h5>
-                  <h6>{{ mention.name }}</h6>
-                  <p>{{ mention.description }}</p>
-                </div>
-              </div>
-            {% endfor %}
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- ***** Testimonials Area End ***** -->
+    <!-- Include mentions -->
+  {% include 'widgets/widget_mentions.html' %}
 
 {% endblock %}

@@ -60,75 +60,12 @@
   <!-- ***** Services Area End ***** -->
 
 
-  <!-- ***** Testimonials Area Start ***** -->
-  <section class="testimonials-area section-padding-100 bg-img bg-gradient-overlay jarallax clearfix" style="background-image: url({% static 'website/img/bg-img/7.jpg' %});">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <!-- Testimonials Slides -->
-          <div class="testimonials-slides owl-carousel">
-            {% for mention in mentions %}
-              <!-- Single Testimonials Slide -->
-              <div class="single-testimonial-slide d-flex align-items-center">
-                <!-- Thumbnail -->
-                {% if mention.img %}
-                  <div class="testimonial-thumb">
-                    <img src="{{ mention.image.url }}" alt="">
-                  </div>
-                {% endif %}
-                <!-- Content -->
-                <div class="testimonial-content">
-                  <h5>{{ mention.content }}</h5>
-                  <h6>{{ mention.name }}</h6>
-                  <p>{{ mention.description }}</p>
-                </div>
-              </div>
-            {% endfor %}
+    <!-- Include mentions -->
+  {% include 'widgets/widget_mentions.html' %}
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- ***** Testimonials Area End ***** -->
+     <!-- Include news -->
+  {% include 'widgets/widget_news.html' %}
 
-  <!-- ***** Blog Area Start ***** -->
-  <section class="dento-blog-area section-padding-100-0 clearfix">
-    <div class="container">
-      <div class="row">
-        <!-- Section Heading -->
-        <div class="col-12">
-          <div class="section-heading text-center">
-            <h2>Последние новости</h2>
-            <div class="line"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        {% for n in news %}
-          <!-- Single Blog Item -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="single-blog-item mb-100">
-              <a href="#">
-                <img src="{% static 'website/img/bg-img/2.jpg' %}" alt="">
-              </a>
-              <!-- Blog Content -->
-              <div class="blog-content">
-                <a href="{{n.get_absolute_url}}" class="post-title">{{n.title}}</a>
-                <p>{{n.content}}</p>
-                <div class="post-meta">
-                  <i class="icon_clock_alt"></i>{{n.publish_date}}
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-
-      </div>
-    </div>
-  </section>
-  <!-- ***** Blog Area End ***** -->
 
 
 {% endblock %}

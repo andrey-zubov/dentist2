@@ -112,6 +112,9 @@ class Appointment(models.Model):
                                          verbose_name='дата и время регистрации услуги')
     date = models.DateField(verbose_name="Дата приема")
     time = models.TimeField(verbose_name="Время приема")
+    clinic = models.ForeignKey('AboutUs',
+                               on_delete=models.CASCADE,
+                               verbose_name='Клиника')
     service = models.ForeignKey(Service,
                                 on_delete=models.CASCADE,
                                 verbose_name="Услугп")
