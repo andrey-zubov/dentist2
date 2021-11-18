@@ -39,7 +39,6 @@ class Client(models.Model):
                                   blank=True)
 
     def delete(self, using=None, keep_parents=False):
-        r
         return super().delete(using, keep_parents)
 
     def __str__(self):
