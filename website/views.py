@@ -191,9 +191,16 @@ def cabinet(request, user_id):
     about_us = AboutUs.objects.all()
 
     if Client.objects.filter(user_id=user_id).exists():
-        if request.method == 'POST':
-            return HttpResponse('post')
         client = Client.objects.get(user_id=user_id)
+        if request.method == 'POST':
+            client.first_name = request.POST['name']
+            client.last_name = request.POST['surname']
+            client.patronymic = request.POST['patronymic']
+            client.email = request.POST['email']
+            client.phone = request.POST['tel']
+            client.address = request.POST['address']
+            client.save()
+
         user_appointment = Appointment.objects.filter(client=client)
         return render(request, 'cabinet.html', {'client': client,
                                                 'user_appointment': user_appointment,
