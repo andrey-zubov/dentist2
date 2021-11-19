@@ -20,15 +20,15 @@
 
 <div class="container">
         <div class="page-header">
-            <h1>Welcome to ChatApp
-                <small>Pick a user and start chatting!</small>
+            <h1>Чат с администрацией
+                <small>Выберите кому написать</small>
             </h1>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <div id="user-list" class="list-group">
                     <a href="" class="list-group-item disabled">
-                        <h4 class="list-group-item-heading">Users</h4>
+                        <h4 class="list-group-item-heading">Администрация</h4>
                         {# Users go here #}
                     </a>
                 </div>
@@ -47,7 +47,7 @@
                         <div class="input-group">
                             <input id="chat-input" type="text"
                                    class="form-control input"
-                                   placeholder="Type your message here ..."
+                                   placeholder="Введите сообщение ..."
                                    maxlength="500">
                             <span class="input-group-btn">
                             <button class="btn btn-info btn"
@@ -66,7 +66,6 @@
     <script>
         let sessionKey = '{{ request.session.session_key }}';
         let currentUser = '{{ request.user.username }}';
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
     </script>
     <script src="{% static 'js/user_chat.js' %}"></script>
 

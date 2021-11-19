@@ -2,12 +2,12 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from .import views
-from .api.api import MessageModelViewSet, UserModelViewSet, ClientUserModelViewSet
+from .api.api import MessageModelViewSet, ClientModelViewSet, AdministratorModelViewSet
 
 router = DefaultRouter()
 router.register(r'message', MessageModelViewSet, basename='message-api')
-router.register(r'user', UserModelViewSet, basename='user-api')
-router.register(r'administrators', ClientUserModelViewSet, basename='administartor-api')
+router.register(r'clients', ClientModelViewSet, basename='user-api')
+router.register(r'administrators', AdministratorModelViewSet, basename='administartor-api')
 
 
 urlpatterns = [

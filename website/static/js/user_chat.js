@@ -1,4 +1,4 @@
-        let currentRecipient = '';
+let currentRecipient = '';
 let chatInput = $('#chat-input');
 let chatButton = $('#btn-send');
 let userList = $('#user-list');
@@ -8,14 +8,15 @@ function updateUserList() {
     $.getJSON('/api/v1/administrators/', function (data) {
         userList.children('.user').remove();
         for (let i = 0; i < data.length; i++) {
-            const userItem = `<a class="list-group-item user">${data[i]['username']}</a>`;
+            const userItem = `<a class="list-group-item user" id="${data[i]['username']}">${data[i]['username']}</a>`;
             $(userItem).appendTo('#user-list');
         }
         $('.user').click(function () {
             userList.children('.active').removeClass('active');
             let selected = event.target;
             $(selected).addClass('active');
-            setCurrentRecipient(selected.text);
+            $(selected).text(selected.id);
+            setCurrentRecipient(selected.id);
         });
     });
 }
@@ -48,9 +49,12 @@ function getConversation(recipient) {
 }
 
 function getMessageById(message) {
-    console.log('messssa get')
     id = JSON.parse(message).message
     $.getJSON(`/api/v1/message/${id}/`, function (data) {
+        let message_from = $('.user').filter(function (index) {
+            return $(this).text() === data.user
+        })
+        message_from.text(data.user + ' новое сообщение!')
         if (data.user === currentRecipient ||
             (data.recipient === currentRecipient && data.user == currentUser)) {
             drawMessage(data);
@@ -59,8 +63,10 @@ function getMessageById(message) {
     });
 }
 
+
+
+
 function sendMessage(recipient, body) {
-    console.log('send')
     $.post('/api/v1/message/', {
         recipient: recipient,
         body: body
@@ -113,7 +119,6 @@ $(document).ready(function () {
     });
 
     socket.onmessage = function (e) {
-        console.log('on_msg')
         getMessageById(e.data);
     };
 });

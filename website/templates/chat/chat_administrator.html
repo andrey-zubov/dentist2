@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="description" content="Toy Chat Application">
-    <title>{% block title %}Welcome{% endblock %} | Guillermo's ChatApp</title>
+    <title>Чат с клиентами</title>
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <script src="{% static 'js/jquery.min.js' %}"></script>
@@ -20,15 +20,15 @@
 
 <div class="container">
         <div class="page-header">
-            <h1>Welcome to ChatApp
-                <small>Pick a user and start chatting!</small>
+            <h1>Чат администратора
+                <small>Выберите клиента, которому хотите написать</small>
             </h1>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <div id="user-list" class="list-group">
                     <a href="" class="list-group-item disabled">
-                        <h4 class="list-group-item-heading">Users</h4>
+                        <h4 class="list-group-item-heading">Клиенты</h4>
                         {# Users go here #}
                     </a>
                 </div>
@@ -47,12 +47,12 @@
                         <div class="input-group">
                             <input id="chat-input" type="text"
                                    class="form-control input"
-                                   placeholder="Type your message here ..."
+                                   placeholder="Введите сообщение ..."
                                    maxlength="500">
                             <span class="input-group-btn">
                             <button class="btn btn-info btn"
                                     id="btn-send">
-                                Send</button>
+                                Отправить</button>
                         </span>
                         </div>
                     </div>
@@ -66,7 +66,6 @@
     <script>
         let sessionKey = '{{ request.session.session_key }}';
         let currentUser = '{{ request.user.username }}';
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
     </script>
     <script src="{% static 'js/administrator_chat.js' %}"></script>
 

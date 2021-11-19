@@ -7,8 +7,8 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.authentication import SessionAuthentication
 
 from dentist import settings
-from website.api.serializers import MessageModelSerializer, UserModelSerializer, AdministratorModelSerializer
-from website.models import MessageModel, Administrator
+from website.api.serializers import MessageModelSerializer, ClientModelSerializer, AdministratorModelSerializer
+from website.models import MessageModel, Administrator, Client
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -52,19 +52,19 @@ class MessageModelViewSet(ModelViewSet):
         return Response(serializer.data)
 
 
-class UserModelViewSet(ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserModelSerializer
+class ClientModelViewSet(ModelViewSet):
+    queryset = Client.objects.all()
+    serializer_class = ClientModelSerializer
     allowed_methods = ('GET', 'HEAD', 'OPTIONS')
     pagination_class = None  # Get all user
 
     def list(self, request, *args, **kwargs):
         # Get all users except yourself
         self.queryset = self.queryset.exclude(id=request.user.id)
-        return super(UserModelViewSet, self).list(request, *args, **kwargs)
+        return super(ClientModelViewSet, self).list(request, *args, **kwargs)
 
 
-class ClientUserModelViewSet(ModelViewSet):
+class AdministratorModelViewSet(ModelViewSet):
     queryset = Administrator.objects.filter()
     serializer_class = AdministratorModelSerializer
     allowed_methods = ('GET', 'HEAD', 'OPTIONS')
