@@ -1,14 +1,14 @@
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
-from website.models import MessageModel
+from website.models import MessageModel, Administrator
 
-from rest_framework.serializers import ModelSerializer, CharField
+from rest_framework import serializers
 
 
-class MessageModelSerializer(ModelSerializer):
-    user = CharField(source='user.username', read_only=True)
-    recipient = CharField(source='recipient.username')
+class MessageModelSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.username', read_only=True)
+    recipient = serializers.CharField(source='recipient.username')
 
     def create(self, validated_data):
         user = self.context['request'].user
@@ -25,7 +25,15 @@ class MessageModelSerializer(ModelSerializer):
         fields = ('id', 'user', 'recipient', 'timestamp', 'body')
 
 
-class UserModelSerializer(ModelSerializer):
+class UserModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
+        fields = ('username',)
+
+
+class AdministratorModelSerializer(serializers.HyperlinkedModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+
+    class Meta:
+        model = Administrator
         fields = ('username',)

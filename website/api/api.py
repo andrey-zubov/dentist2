@@ -7,8 +7,8 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.authentication import SessionAuthentication
 
 from dentist import settings
-from website.api.serializers import MessageModelSerializer, UserModelSerializer
-from website.models import MessageModel
+from website.api.serializers import MessageModelSerializer, UserModelSerializer, AdministratorModelSerializer
+from website.models import MessageModel, Administrator
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -23,9 +23,6 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 
 
 class MessagePagination(PageNumberPagination):
-    """
-    Limit message prefetch to one page.
-    """
     page_size = settings.MESSAGES_TO_LOAD
 
 
@@ -65,3 +62,10 @@ class UserModelViewSet(ModelViewSet):
         # Get all users except yourself
         self.queryset = self.queryset.exclude(id=request.user.id)
         return super(UserModelViewSet, self).list(request, *args, **kwargs)
+
+
+class ClientUserModelViewSet(ModelViewSet):
+    queryset = Administrator.objects.filter()
+    serializer_class = AdministratorModelSerializer
+    allowed_methods = ('GET', 'HEAD', 'OPTIONS')
+    pagination_class = None
