@@ -13,7 +13,6 @@
       <div class="col-12">
         <div class="section-heading text-center white">
           <h1>Личный кабинет</h1>
-          <a href="{{ client.go_to_chat }}" class="btn dento-btn booking-btn">Чат с адмиистрацией</a>
       </div>
     </div>
 
@@ -130,9 +129,6 @@
         <!-- Client Questions -->
         <div class="appointment-form">
           <div class="row">
-            <div class="col-12">
-              <h3>Связь с администрацией</h3>
-            </div>
             {% if client.special_message %}
               <div class="text-center">
                 <div class="col-12">
@@ -143,6 +139,10 @@
           </div>
         </div>
       </div>
+
+      {% include 'chat/chat_room.html' %}
+
+
     </div>
     <!-- Client Questions End -->
 
