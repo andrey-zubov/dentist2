@@ -48,6 +48,7 @@ function getConversation(recipient) {
 }
 
 function getMessageById(message) {
+    console.log('messssa get')
     id = JSON.parse(message).message
     $.getJSON(`/api/v1/message/${id}/`, function (data) {
         if (data.user === currentRecipient ||
@@ -59,6 +60,7 @@ function getMessageById(message) {
 }
 
 function sendMessage(recipient, body) {
+    console.log('send')
     $.post('/api/v1/message/', {
         recipient: recipient,
         body: body
@@ -90,9 +92,16 @@ $(document).ready(function () {
     disableInput();
 
 //    let socket = new WebSocket(`ws://127.0.0.1:8000/?session_key=${sessionKey}`);
+//     var socket = new WebSocket(
+//         'ws://' + window.location.host +
+//         '/ws?session_key=${sessionKey}')
     var socket = new WebSocket(
-        'ws://' + window.location.host +
-        '/ws?session_key=${sessionKey}')
+        'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + sessionKey
+            + '/'
+        );
 
     chatInput.keypress(function (e) {
         if (e.keyCode == 13)
@@ -107,6 +116,7 @@ $(document).ready(function () {
     });
 
     socket.onmessage = function (e) {
+        console.log('on_msg')
         getMessageById(e.data);
     };
 });
