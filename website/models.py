@@ -3,6 +3,9 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User, Permission
 from django.shortcuts import reverse
 
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+
 
 class Administrator(models.Model):
     user = models.OneToOneField(User,
@@ -16,6 +19,9 @@ class Administrator(models.Model):
 
     def go_to_cabinet(self):
         return reverse('cabinet_page', kwargs={'id': self.user_id})
+
+    def go_to_chat(self):
+        return reverse('admin_chat_page', kwargs={'room_name': self.user_id})
 
 
 class Client(models.Model):
@@ -49,6 +55,9 @@ class Client(models.Model):
 
     def go_to_cabinet(self):
         return reverse('cabinet_page', kwargs={'id': self.user_id})
+
+    def go_to_chat(self):
+        return reverse('user_chat_page', kwargs={'room_name': self.user_id})
 
 
 class DoctorCard(models.Model):
@@ -195,3 +204,64 @@ class News(models.Model):
 
     def get_absolute_url(self):
         return reverse('single_news_page', kwargs={'id': self.id})
+
+
+class MessageModel(models.Model):
+    """
+    This class represents a chat message. It has a owner (user), timestamp and
+    the message body.
+
+    """
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             verbose_name='user',
+                             related_name='from_user',
+                             db_index=True)
+    recipient = models.ForeignKey(User,
+                                  on_delete=models.CASCADE,
+                                  verbose_name='recipient',
+                                  related_name='to_user',
+                                  db_index=True)
+    timestamp = models.DateTimeField('timestamp',
+                                     auto_now_add=True,
+                                     editable=False,
+                                     db_index=True)
+    body = models.TextField('body')
+
+    def __str__(self):
+        return str(self.id)
+
+    def characters(self):
+        return len(self.body)
+
+    def notify_ws_clients(self):
+        """
+        Inform client there is a new message.
+        """
+        notification = {
+            'type': 'recieve_group_message',
+            'message': '{}'.format(self.id)
+        }
+
+        channel_layer = get_channel_layer()
+        print("user.id {}".format(self.user.id))
+        print("user.id {}".format(self.recipient.id))
+
+        async_to_sync(channel_layer.group_send)("{}".format(self.user.id), notification)
+        async_to_sync(channel_layer.group_send)("{}".format(self.recipient.id), notification)
+
+    def save(self, *args, **kwargs):
+        """
+        Trims white spaces, saves the message and notifies the recipient via WS
+        if the message is new.
+        """
+        new = self.id
+        self.body = self.body.strip()  # Trimming whitespaces from the body
+        super(MessageModel, self).save(*args, **kwargs)
+        if new is None:
+            self.notify_ws_clients()
+
+    class Meta:
+        verbose_name = 'message'
+        verbose_name_plural = 'messages'
+        ordering = ('-timestamp',)

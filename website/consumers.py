@@ -24,6 +24,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     # Receive message from WebSocket
     async def receive(self, text_data):
+        print(f'recive {text_data}')
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
 
@@ -38,6 +39,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     # Receive message from room group
     async def chat_message(self, event):
+        print(f'chat mess {event}')
         message = event['message']
 
         # Send message to WebSocket

@@ -207,13 +207,15 @@ def cabinet(request, user_id):
                                                        'about_us': about_us})
 
     elif Administrator.objects.filter(user_id=user_id).exists():
+        administrator = Administrator.objects.get(user_id=user_id)
 
-        return render(request, 'administrator_cabinet.html', {'about_us': about_us})
-
-
-def chat_main(request):
-    return render(request, 'chat/chat_main.html')
+        return render(request, 'administrator_cabinet.html', {'about_us': about_us,
+                                                              'administrator': administrator})
 
 
-def room(request, room_name):
+def user_chat(request, room_name):
     return render(request, 'chat/chat_room.html', {'room_name': room_name})
+
+
+def administrator_chat(request, room_name):
+    return render(request, 'chat/chat_administrator.html', {'room_name': room_name})
