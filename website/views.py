@@ -255,6 +255,7 @@ def ajax_save_question(request):
     question.save()
     return HttpResponse(1)
 
+
 def ajax_save_client(request):
     client = Client.objects.get(id=request.POST['client_id'])
     client.first_name = request.POST['first_name']
