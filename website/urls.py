@@ -28,6 +28,8 @@ urlpatterns = [
 
 
     path('chat/<str:room_name>/', views.user_chat, name='user_chat_page'),
-    path('admin-chat/<str:room_name>/', views.administrator_chat, name='admin_chat_page')
+    path('admin-chat/<str:room_name>/', views.administrator_chat, name='admin_chat_page'),
+
+    path('appointment-report/<int:a_id>/', views.doctor_appointment_report, name='appoinment_report_page'),
 
 ]

@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, reverse
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
@@ -208,6 +208,16 @@ def cabinet(request, user_id):
 
     elif DoctorCard.objects.filter(user_id=user_id).exists():
         doctor = DoctorCard.objects.get(user_id=user_id)
+        if request.method == 'POST':
+            doctor.first_name = request.POST['name']
+            doctor.last_name = request.POST['surname']
+            doctor.patronymic = request.POST['patronymic']
+            doctor.email = request.POST['email']
+            doctor.phone = request.POST['tel']
+            doctor.specialization = request.POST['specialization']
+            doctor.description = request.POST['description']
+            doctor.save()
+
         user_appointment = Appointment.objects.filter(doctor=doctor)
         return render(request, 'doctor_cabinet.html', {'doctor': doctor,
                                                        'user_appointment': user_appointment,
@@ -218,6 +228,15 @@ def cabinet(request, user_id):
 
         return render(request, 'administrator_cabinet.html', {'about_us': about_us,
                                                               'administrator': administrator})
+
+
+def doctor_appointment_report(request, a_id):
+    appointment = Appointment.objects.get(id=a_id)
+    if request.method == 'POST':
+        appointment.report = request.POST['appointment_report']
+        appointment.save()
+        return redirect('cabinet_page', request.user.id)
+    return render(request, 'reports/doc_appointment.html', {'appointment': appointment})
 
 
 def user_chat(request, room_name):

@@ -135,7 +135,11 @@ class Appointment(models.Model):
                                on_delete=models.CASCADE,
                                verbose_name='Врач')
     client_comment = models.TextField(null=True,
+                                      blank=True,
                                       verbose_name='Комментарий клиента')
+    report = models.TextField(null=True,
+                              blank=True,
+                              verbose_name='Отчет о посещении')
 
     class Meta:
         verbose_name = 'Визит к врачу'
@@ -143,6 +147,9 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f'{self.id} {self.date} {self.time} {self.client}'
+
+    def appointment_report(self):
+        return reverse('appoinment_report_page', kwargs={'a_id': self.id})
 
 
 class AboutUs(models.Model):

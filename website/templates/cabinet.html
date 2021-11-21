@@ -98,10 +98,11 @@
                   <tr>
                     <th scope="col">Дата приема</th>
                     <th scope="col">Время приема</th>
-                    <th scope="col">Услуга (нажмите на услугу чтобы ознакомиться с результатом)</th>
-<!--                      <th scope="col">Врач</th>-->
+                    <th scope="col">Услуга</th>
+                    <th scope="col">Врач</th>
                     <th scope="col">Цена</th>
                     <th scope="col">Ваш коментарий</th>
+                    <th scope="col">Рзультат</th>
                   </tr>
                 </thead>
                 {% for a in user_appointment %}
@@ -109,10 +110,15 @@
                     <tr>
                       <th scope="row">{{a.date}}</th>
                       <th scope="row">{{a.time}}</th>
-                      <th scope="row"><a href="#">{{a.service}}</a></th>
-<!--                        <th scope="row">{{a.doctor}}</th>-->
+                      <th scope="row">{{a.service}}</th>
+                      <th scope="row">{{a.doctor}}</th>
                       <th scope="row">{{a.service.price}}</th>
                       <th scope="row">{{a.client_comment}}</th>
+                      {% if a.report %}
+                        <th scope="row" width="400px">{{a.report}}</th>
+                      {% else %}}
+                        <th scope="row">Результата пока нет</th>
+                      {% endif %}
                     </tr>
                   </tbody>
                 {% endfor %}

@@ -101,6 +101,7 @@
                     <th scope="col">Услуга</th>
                     <th scope="col">Пациент</th>
                     <th scope="col">Комментарий пациента</th>
+                    <th scope="col">Отчет</th>
                   </tr>
                 </thead>
                 {% for a in user_appointment %}
@@ -111,6 +112,7 @@
                       <th scope="row">{{a.service}}</th>
                       <th scope="row">{{a.client}}</th>
                       <th scope="row">{{a.client_comment}}</th>
+                      <th scope="row"><a href="{{a.appointment_report}}" class="dento-btn">Отчет</a></th>
                     </tr>
                   </tbody>
                 {% endfor %}
