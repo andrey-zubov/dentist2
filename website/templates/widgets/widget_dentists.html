@@ -21,10 +21,12 @@
               <!-- Dentist Content -->
               <div class="dentist-content">
                 <!-- Dentist Info -->
-                <div class="dentist-info bg-gradient-overlay">
-                  <h5>{{ doc.name }}</h5>
-                  <p>{{ doc.specialization }}</p>
-                </div>
+                <a href="{{doc.ask_doctor}}">
+                  <div class="dentist-info bg-gradient-overlay">
+                    <h5>{{ doc.first_name }}</h5>
+                    <p>{{ doc.specialization }}</p>
+                  </div>
+                </a>
               </div>
             </div>
           </div>

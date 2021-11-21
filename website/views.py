@@ -5,7 +5,7 @@ from django.db.models import Q
 
 from .models import (User, Client, Service, AboutUs,
                      DoctorCard, Mention, News,
-                     Appointment, Administrator)
+                     Appointment, Administrator, DoctorQuestion)
 
 from datetime import datetime
 
@@ -185,6 +185,19 @@ def single_news(request, id):
     news = News.objects.get(id=id)
     return render(request, 'news.html', {'news': news,
                                          'about_us': about_us})
+
+
+def ask_doctor(request, doc_id):
+    doctor = DoctorCard.objects.get(id=doc_id)
+    if request.method == 'POST':
+        DoctorQuestion.objects.create(
+            client=Client.objects.get(user_id=request.user.id),
+            doctor=doctor,
+            text=request.POST['question']
+        )
+        return redirect('home')
+
+    return render(request, 'ask_doctor.html', {'doctor': doctor})
 
 
 def cabinet(request, user_id):

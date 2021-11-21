@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Задать вопрос врачу
+{% endblock %}
+
+{% block meta_description %}Задать вопрос {{doctor.first_name}}{% endblock %}"
+
+{% block content %}
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-heading text-center">
+          <h2>Задайте вопрос {{doctor.last_name}} {{doctor.first_name}}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="button-form">
+          <form action="" method="post">
+            {% csrf_token %}
+            <div class="col-12">
+              <textarea name="question" class="form-control" placeholder="Введите текст вопроса ..."></textarea>
+            </div>
+              <div class="col-12 text-left">
+                <button type="submit" class="btn dento-btn">ОК</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

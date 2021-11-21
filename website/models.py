@@ -92,6 +92,9 @@ class DoctorCard(models.Model):
     def go_to_cabinet(self):
         return reverse('cabinet_page', kwargs={'id': self.user_id})
 
+    def ask_doctor(self):
+        return reverse('ask_doctor_page', kwargs={'doc_id': self.id})
+
     class Meta:
         verbose_name = 'Карточка врача'
         verbose_name_plural = 'Карточки врачей'
@@ -272,3 +275,16 @@ class MessageModel(models.Model):
         verbose_name = 'message'
         verbose_name_plural = 'messages'
         ordering = ('-timestamp',)
+
+
+class DoctorQuestion(models.Model):
+    doctor = models.ForeignKey(DoctorCard,
+                               on_delete=models.CASCADE,
+                               verbose_name='доктор')
+    client = models.ForeignKey(Client,
+                               on_delete=models.CASCADE,
+                               verbose_name='клиент')
+    date = models.DateTimeField(auto_now_add=True,
+                                editable=False,
+                                verbose_name='Когда был задан')
+    text = models.TextField(verbose_name='вопрос')

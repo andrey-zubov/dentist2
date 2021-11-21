@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<form action="" method="post">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-12">
+        <label for="report_id">Опишите результат процедуры</label>
+    </div>
+  </div>
+    <div class="col-12">
+      <textarea id="report_id" name="appointment_report" rows="20" cols="60">{{appointment.report}}</textarea>
+    </div>
+  </div>
+    <div class="col-12">
+      <button type="submit">Сохранить</button>
+    </div>
+  </div>
+
+</form>
+</body>
+</html>
