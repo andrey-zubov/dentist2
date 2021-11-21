@@ -242,9 +242,11 @@ def cabinet(request, user_id):
 
     elif Administrator.objects.filter(user_id=user_id).exists():
         administrator = Administrator.objects.get(user_id=user_id)
+        clients = Client.objects.all()
 
         return render(request, 'administrator_cabinet.html', {'about_us': about_us,
-                                                              'administrator': administrator})
+                                                              'administrator': administrator,
+                                                              'clients': clients})
 
 
 def ajax_save_question(request):

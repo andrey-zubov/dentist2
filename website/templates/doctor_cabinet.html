@@ -148,7 +148,7 @@
                     <th scope="col" width="400px">
                       <form action="" method="post" class="answer_question">
                         {% csrf_token %}
-                        <input hidden contenteditable="false" name="question_id" value="{{q.id}}">
+                        <input hidden readonly name="question_id" value="{{q.id}}">
 
                         <textarea name="answer" cols="35" rows="3">{{q.answer}}</textarea>
                         <button type="submit">Сохранить</button>
@@ -157,6 +157,7 @@
                   </tbody>
                 {% endfor %}
               </table>
+            </div>
           </div>
         </div>
       </div>
