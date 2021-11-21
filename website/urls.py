@@ -35,5 +35,6 @@ urlpatterns = [
 
     path('ajax_save_question', views.ajax_save_question),
     path('ajax_save_client', views.ajax_save_client),
+    path('ajax_delete_client', views.ajax_delete_client),
 
 ]

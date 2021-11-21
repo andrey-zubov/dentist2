@@ -256,7 +256,6 @@ def ajax_save_question(request):
     return HttpResponse(1)
 
 def ajax_save_client(request):
-    print(request.POST)
     client = Client.objects.get(id=request.POST['client_id'])
     client.first_name = request.POST['first_name']
     client.last_name = request.POST['last_name']
@@ -265,6 +264,11 @@ def ajax_save_client(request):
     client.phone = request.POST['phone']
     client.address = request.POST['address']
     client.save()
+    return HttpResponse(1)
+
+
+def ajax_delete_client(request):
+    Client.objects.get(id=request.POST['client_id']).delete()
     return HttpResponse(1)
 
 

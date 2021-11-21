@@ -48,7 +48,7 @@
             <th scope="col">Действие</th>
           </thead>
           {% for client in clients %}
-            <tbody>
+            <tbody id="table_{{client.id}}">
               <form action="" class="client_administration" id="form_{{client.id}}">
                 {% csrf_token %}
                 <th scope="col">

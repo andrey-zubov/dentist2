@@ -46,6 +46,27 @@ $(document).ready(function () {
         $('#cancel_'+client_id).toggle();
     });
 
+    $('.delete_client').click(function (f) {
+        let client_id = $(this).attr('id').split('_')[1]
+        let csrf = $('input[name="csrfmiddlewaretoken"]').val();
+        $('#table_'+client_id).hide()
+
+        $.ajax({
+            'type': 'post',
+            'data': {
+                'client_id': client_id,
+                'csrfmiddlewaretoken': csrf,
+            },
+            'url': '/ajax_delete_client',
+            success: function (suc) {
+              console.log('suc');
+              },
+              error: function (err) {
+                  console.log(err);
+              },
+        });
+    })
+
 
 
     // $('.answer_question').submit(function (f) {
