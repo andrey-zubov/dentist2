@@ -42,24 +42,27 @@
             <th scope="col">Фамилия</th>
             <th scope="col">Имя</th>
             <th scope="col">Отчество</th>
-            <th scope="col">Телефон</th>
             <th scope="col">email</th>
+            <th scope="col">Телефон</th>
             <th scope="col">Адрес</th>
             <th scope="col">Действие</th>
           </thead>
           {% for client in clients %}
             <tbody>
-              <form action="" class="client_administration">
-                <th scope="col"><input name="last_name" value="{{client.last_name}}" readonly size="12px"></th>
+              <form action="" class="client_administration" id="form_{{client.id}}">
+                {% csrf_token %}
+                <th scope="col">
+                  <input name="client_id" value="{{client.id}}" readonly style="display: none">
+                  <input name="last_name" value="{{client.last_name}}" readonly size="12px"></th>
                 <th scope="col"><input name="first_name" value="{{client.first_name}}" readonly size="12px"></th>
-                <th scope="col"><input name="" value="{{client.patronymic}}" readonly size="12px"></th>
-                <th scope="col"><input name="" value="{{client.email}}" readonly size="12px"></th>
-                <th scope="col"><input name="" value="{{client.phone}}" readonly size="12px"></th>
-                <th scope="col"><input name="" value="{{client.address}}" readonly></th>
+                <th scope="col"><input name="patronymic" value="{{client.patronymic}}" readonly size="12px"></th>
+                <th scope="col"><input name="email" value="{{client.email}}" readonly size="12px"></th>
+                <th scope="col"><input name="phone" value="{{client.phone}}" readonly size="12px"></th>
+                <th scope="col"><input name="address" value="{{client.address}}" readonly></th>
                 <th scope="col">
                   <input type="button" value="Изменить" class="change_client" id="change_{{client.id}}">
                   <input type="button" id="delete_{{client.id}}" value="Удалить" class="delete_client">
-                  <input type="button" id="save_{{client.id}}" value="Сохранить" class="save_client" style="display: none">
+                  <input type="submit" id="save_{{client.id}}" value="Сохранить" class="save_client" style="display: none">
                   <input type="button" id="cancel_{{client.id}}" value="Отмена" class="cancel_client" style="display: none">
                 </th>
               </form>

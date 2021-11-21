@@ -250,10 +250,21 @@ def cabinet(request, user_id):
 
 
 def ajax_save_question(request):
-    print(request.POST)
     question = DoctorQuestion.objects.get(id=request.POST['question_id'])
     question.answer = request.POST['answer']
     question.save()
+    return HttpResponse(1)
+
+def ajax_save_client(request):
+    print(request.POST)
+    client = Client.objects.get(id=request.POST['client_id'])
+    client.first_name = request.POST['first_name']
+    client.last_name = request.POST['last_name']
+    client.patronymic = request.POST['patronymic']
+    client.email = request.POST['email']
+    client.phone = request.POST['phone']
+    client.address = request.POST['address']
+    client.save()
     return HttpResponse(1)
 
 
