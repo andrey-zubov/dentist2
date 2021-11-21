@@ -74,7 +74,39 @@
           </div>
         </div>
       </div>
+    </div>
       <!-- Client Cabinet Form End -->
+
+    <div class="row">
+      <div class="col-12">
+        <!-- Client Questions -->
+        <div class="appointment-form">
+          <div class="row">
+            <div class="col-12">
+              <h3>Заданые вопросы</h3>
+            </div>
+            <div class="dento-price-table table-responsive">
+              <table class="table table-borderless mb-0">
+                <thead>
+                  <th scope="col">Дата</th>
+                  <th scope="col">Врач</th>
+                  <th scope="col" width="400px">Вопрос</th>
+                  <th scope="col" width="400px">Ответ</th>
+                </thead>
+                {% for q in questions %}
+                  <tbody>
+                    <th scope="col">{{q.date}}</th>
+                    <th scope="col">{{q.doctor}}</th>
+                    <th scope="col" width="400px">{{q.text}}</th>
+                    <th scope="col" width="400px">{{q.answer}}</th>
+                  </tbody>
+                {% endfor %}
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Client Questions End -->
 
     <div class="row">
       <div class="col-12">
@@ -116,7 +148,7 @@
                       <th scope="row">{{a.client_comment}}</th>
                       {% if a.report %}
                         <th scope="row" width="400px">{{a.report}}</th>
-                      {% else %}}
+                      {% else %}
                         <th scope="row">Результата пока нет</th>
                       {% endif %}
                     </tr>

@@ -205,6 +205,7 @@ def cabinet(request, user_id):
 
     if Client.objects.filter(user_id=user_id).exists():
         client = Client.objects.get(user_id=user_id)
+        questions = DoctorQuestion.objects.filter(client=client).order_by('id').reverse()[:5]
         if request.method == 'POST':
             client.first_name = request.POST['name']
             client.last_name = request.POST['surname']
@@ -217,11 +218,12 @@ def cabinet(request, user_id):
         user_appointment = Appointment.objects.filter(client=client)
         return render(request, 'cabinet.html', {'client': client,
                                                 'user_appointment': user_appointment,
-                                                'about_us': about_us})
+                                                'about_us': about_us,
+                                                'questions': questions})
 
     elif DoctorCard.objects.filter(user_id=user_id).exists():
         doctor = DoctorCard.objects.get(user_id=user_id)
-        quesions = DoctorQuestion.objects.filter(doctor=doctor)
+        quesions = DoctorQuestion.objects.filter(doctor=doctor).filter(is_answered=False)
         if request.method == 'POST':
             doctor.first_name = request.POST['name']
             doctor.last_name = request.POST['surname']
