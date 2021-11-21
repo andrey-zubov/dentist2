@@ -221,6 +221,7 @@ def cabinet(request, user_id):
 
     elif DoctorCard.objects.filter(user_id=user_id).exists():
         doctor = DoctorCard.objects.get(user_id=user_id)
+        quesions = DoctorQuestion.objects.filter(doctor=doctor)
         if request.method == 'POST':
             doctor.first_name = request.POST['name']
             doctor.last_name = request.POST['surname']
@@ -234,13 +235,22 @@ def cabinet(request, user_id):
         user_appointment = Appointment.objects.filter(doctor=doctor)
         return render(request, 'doctor_cabinet.html', {'doctor': doctor,
                                                        'user_appointment': user_appointment,
-                                                       'about_us': about_us})
+                                                       'about_us': about_us,
+                                                       'questions': quesions})
 
     elif Administrator.objects.filter(user_id=user_id).exists():
         administrator = Administrator.objects.get(user_id=user_id)
 
         return render(request, 'administrator_cabinet.html', {'about_us': about_us,
                                                               'administrator': administrator})
+
+
+def ajax_save_question(request):
+    print(request.POST)
+    question = DoctorQuestion.objects.get(id=request.POST['question_id'])
+    question.answer = request.POST['answer']
+    question.save()
+    return HttpResponse(1)
 
 
 def doctor_appointment_report(request, a_id):
@@ -258,3 +268,4 @@ def user_chat(request, room_name):
 
 def administrator_chat(request, room_name):
     return render(request, 'chat/chat_administrator.html', {'room_name': room_name})
+

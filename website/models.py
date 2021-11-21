@@ -288,3 +288,6 @@ class DoctorQuestion(models.Model):
                                 editable=False,
                                 verbose_name='Когда был задан')
     text = models.TextField(verbose_name='вопрос')
+    answer = models.TextField(verbose_name='ответ')
+    is_answered = models.BooleanField(default=False)
+

@@ -33,4 +33,6 @@ urlpatterns = [
 
     path('appointment-report/<int:a_id>/', views.doctor_appointment_report, name='appoinment_report_page'),
 
+    path('ajax_save_question', views.ajax_save_question),
+
 ]

@@ -130,11 +130,33 @@
         <div class="appointment-form">
           <div class="row">
             <div class="col-12">
-              <h3>Связь с администрацией</h3>
+              <h3>Заданые вопросы</h3>
             </div>
-            <div class="">
+            <div class="dento-price-table table-responsive">
+              <table class="table table-borderless mb-0">
+                <thead>
+                  <th scope="col">Дата</th>
+                  <th scope="col">Пациент</th>
+                  <th scope="col" width="400px">Вопрос</th>
+                  <th scope="col" width="400px">Ответ</th>
+                </thead>
+                {% for q in questions %}
+                  <tbody>
+                    <th scope="col">{{q.date}}</th>
+                    <th scope="col">{{q.client}}</th>
+                    <th scope="col" width="400px">{{q.text}}</th>
+                    <th scope="col" width="400px">
+                      <form action="" method="post" class="answer_question">
+                        {% csrf_token %}
+                        <input hidden contenteditable="false" name="question_id" value="{{q.id}}">
 
-            </div>
+                        <textarea name="answer" cols="35" rows="3">{{q.answer}}</textarea>
+                        <button type="submit">Сохранить</button>
+                      </form>
+                    </th>
+                  </tbody>
+                {% endfor %}
+              </table>
           </div>
         </div>
       </div>
@@ -144,5 +166,8 @@
 
   </div>
 </section>
+
+<script src="{% static 'js/question.js' %}"></script>
+
 
 {% endblock %}
