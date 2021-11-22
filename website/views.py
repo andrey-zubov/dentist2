@@ -70,8 +70,11 @@ def registration(request):
                 email=request.POST['email'],
                 phone=request.POST['phone']
             )
-            login(request, new_user)
-            return redirect('home')
+            if not Administrator.objects.filter(user_id=request.user.id).exists():
+                login(request, new_user)
+                return redirect('home')
+            else:
+                return redirect('cabinet_page', user_id=request.user.id)
 
         err = 'Пароли должны совпадать'
     return render(request, 'registration.html', {'err': err,
