@@ -33,6 +33,7 @@ urlpatterns = [
     path('admin-chat/<str:room_name>/', views.administrator_chat, name='admin_chat_page'),
 
     path('appointment-report/<int:a_id>/', views.doctor_appointment_report, name='appoinment_report_page'),
+    path('total_reports/<int:admin_id>/', views.administrator_reports, name='admin_reports_page'),
 
     path('ajax_save_question', views.ajax_save_question),
     path('ajax_save_client', views.ajax_save_client),

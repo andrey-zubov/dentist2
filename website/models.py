@@ -23,6 +23,9 @@ class Administrator(models.Model):
     def go_to_chat(self):
         return reverse('admin_chat_page', kwargs={'room_name': self.user_id})
 
+    def go_to_reports(self):
+        return reverse('admin_reports_page', kwargs={'admin_id': self.user_id})
+
 
 class Client(models.Model):
     user = models.OneToOneField(User,

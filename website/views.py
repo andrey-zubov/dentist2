@@ -334,6 +334,10 @@ def doctor_appointment_report(request, a_id):
     return render(request, 'reports/doc_appointment.html', {'appointment': appointment})
 
 
+def administrator_reports(request, admin_id):
+    return HttpResponse('werq')
+
+
 def user_chat(request, room_name):
     return render(request, 'chat/chat_room.html', {'room_name': room_name})
 
