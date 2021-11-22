@@ -1,11 +1,66 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    Отчеты
+Отчеты
 {% endblock %}
 
 {% block meta_description %}Отчеты{% endblock %}"
 
 {% block content %}
+<div class="container">
+  <div class="row">
+    <!-- client rep start -->
+    <div class="col-12">
+      <div class="text-center">
+        <h1>Отчет по клиентам</h1>
+      </div>
+    </div>
+    <div class="dento-price-table table-responsive">
+      <table class="table table-borderless mb-0">
+        <thead>
+        <th scope="col">Фамилия</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Отчество</th>
+        <th scope="col">Количество приемов</th>
+        </thead>
+        {% for client in clients %}
+        <tbody id="table_{{client.id}}">
+        <th scope="col">{{client.last_name}}</th>
+        <th scope="col">{{client.first_name}}</th>
+        <th scope="col">{{client.patronymic}}</th>
+        <th scope="col">{{client.appointment_set.count}}</th>
+        </tbody>
+        {% endfor %}
+      </table>
+    </div>
+    <!-- Client rep End -->
+    <!-- doctors rep start -->
+    <div class="col-12">
+      <div class="text-center">
+        <h1>Отчет по врачам</h1>
+      </div>
+    </div>
+    <div class="dento-price-table table-responsive">
+      <table class="table table-borderless mb-0">
+        <thead>
+          <th scope="col">Фамилия</th>
+          <th scope="col">Имя</th>
+          <th scope="col">Отчество</th>
+          <th scope="col">Количество приемов</th>
+
+        </thead>
+        {% for doctor in doctors %}
+          <tbody id="table_{{doctor.id}}">
+            <th scope="col">{{doctor.last_name}}</th>
+            <th scope="col">{{doctor.first_name}}</th>
+            <th scope="col">{{doctor.patronymic}}</th>
+            <th scope="col">{{doctor.appointment_set.count}}</th>
+          </tbody>
+        {% endfor %}
+      </table>
+    </div>
+    <!-- doctors rep end -->
+  </div>
+</div>
 
 {% endblock %}

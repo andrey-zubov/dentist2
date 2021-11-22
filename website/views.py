@@ -335,7 +335,12 @@ def doctor_appointment_report(request, a_id):
 
 
 def administrator_reports(request, admin_id):
-    return HttpResponse('werq')
+    clients = Client.objects.all().prefetch_related('user')
+    doctors = DoctorCard.objects.all().prefetch_related('user')
+    appointments = Appointment.objects.all()
+    return render(request, 'reports/admin_reports.html', {'clients': clients,
+                                                          'doctors': doctors,
+                                                          'appointments': appointments})
 
 
 def user_chat(request, room_name):
