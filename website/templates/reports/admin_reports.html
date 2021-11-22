@@ -34,6 +34,7 @@
       </table>
     </div>
     <!-- Client rep End -->
+
     <!-- doctors rep start -->
     <div class="col-12">
       <div class="text-center">
@@ -60,6 +61,58 @@
       </table>
     </div>
     <!-- doctors rep end -->
+
+    <!-- appointmet rep start -->
+    <div class="col-12">
+      <div class="text-center">
+        <h1>Отчет по приемам</h1>
+      </div>
+    </div>
+    <div class="dento-price-table table-responsive">
+      <table class="table table-borderless mb-0">
+        <thead>
+          <th scope="col">Дата</th>
+          <th scope="col">Клиника</th>
+          <th scope="col">Услуга</th>
+          <th scope="col">Врач</th>
+        </thead>
+        {% for app in appointments %}
+          <tbody>
+            <th scope="col">{{app.date}}</th>
+            <th scope="col">{{app.clinic}}</th>
+            <th scope="col">{{app.service}}</th>
+            <th scope="col">{{app.doctor}}</th>
+          </tbody>
+        {% endfor %}
+      </table>
+    </div>
+    <!-- appointments rep end -->
+
+    <!-- appointmet rep start -->
+    <div class="col-12">
+      <div class="text-center">
+        <h1>Отчет по услугам</h1>
+      </div>
+    </div>
+    <div class="dento-price-table table-responsive">
+      <table class="table table-borderless mb-0">
+        <thead>
+          <th scope="col">Услуга</th>
+          <th scope="col">Оказано</th>
+          <th scope="col">Стоимость</th>
+          <th scope="col">Приход</th>
+        </thead>
+        {% for serv in services %}
+          <tbody>
+            <th scope="col">{{serv.title}}</th>
+            <th scope="col">{{serv.appointment_set.count}}</th>
+            <th scope="col">{{serv.price}}</th>
+            <th scope="col">{{serv.profit}}</th>
+          </tbody>
+        {% endfor %}
+      </table>
+    </div>
+    <!-- appointments rep end -->
   </div>
 </div>
 

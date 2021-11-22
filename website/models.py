@@ -117,9 +117,7 @@ class Service(models.Model):
                               verbose_name='Изображение')
     title = models.CharField(max_length=168, verbose_name='Название')
     content = models.TextField(verbose_name='Описание')
-    price = models.DecimalField(decimal_places=2,
-                                verbose_name='стоимость',
-                                max_digits=16)
+    price = models.IntegerField(verbose_name='стоимость')
 
 
 class Appointment(models.Model):

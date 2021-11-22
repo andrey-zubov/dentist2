@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect, reverse
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Q
+from django.db.models import Q, Count, F
 
 from .models import (User, Client, Service, AboutUs,
                      DoctorCard, Mention, News,
@@ -338,9 +338,11 @@ def administrator_reports(request, admin_id):
     clients = Client.objects.all().prefetch_related('user')
     doctors = DoctorCard.objects.all().prefetch_related('user')
     appointments = Appointment.objects.all()
+    services = Service.objects.annotate(profit=Count('appointment') * F('price'))
     return render(request, 'reports/admin_reports.html', {'clients': clients,
                                                           'doctors': doctors,
-                                                          'appointments': appointments})
+                                                          'appointments': appointments,
+                                                          'services': services})
 
 
 def user_chat(request, room_name):
