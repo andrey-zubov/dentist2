@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Регистрация
+{% endblock %}
+
+{% block meta_description %}Страница Регистрации{% endblock %}"
+
+{% block content %}
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="contact-form text-center">
+          <h2>login</h2>
+          <form action="{% url 'add_doctor_page' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-12">
+                <label for="id_username">Введите ваш логин</label>
+                <input id="id_username" name="username" type="text" placeholder="login" required>
+              </div>
+              <div class="col-12">
+                <label for="id_password1">Введите ваш пароль</label>
+                <input id="id_password1" name="password1" type="password" placeholder="password" required>
+              </div>
+              <div class="col-12">
+                <label for="id_password2">Повторите пароль</label>
+                <input id="id_password2" name="password2" type="password" placeholder="password" required>
+              </div>
+              <div class="col-12">
+                <label for="id_name">Имя</label>
+                <input id="id_name" name="first_name" placeholder="Ваше имя" required>
+              </div>
+              <div class="col-12">
+                <label for="id_last_name">Фамилия</label>
+                <input id="id_last_name" name="last_name" placeholder="Ваша фамилия" required>
+              </div>
+              <div class="col-12">
+                <label for="id_patronymic">Отчество</label>
+                <input id="id_patronymic" name="patronymic" placeholder="Отчество, если имеется" required>
+              </div>
+              <div class="col-12">
+                <label for="id_email">email</label>
+                <input id="id_email" name="email" placeholder="example@mail.com" required>
+              </div>
+              <div class="col-12">
+                <label for="id_phone">Телефон</label>
+                <input id="id_phone" name="phone" placeholder="введите номер" required>
+              </div>
+              <div class="col-12">
+                <label for="id_description">Описание</label>
+                <input id="id_description" name="description" placeholder="Описание" required>
+              </div>
+              <div class="col-12">
+                <label for="id_specialization">Специализация</label>
+                <input id="id_specialization" name="specialization" placeholder="Специализация" required>
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn dento-btn">Зарегистрировать</button>
+              </div>
+            </div>
+          </form>
+          {% if err %}
+            {{ err }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

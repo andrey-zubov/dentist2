@@ -26,6 +26,7 @@ urlpatterns = [
     path('cabinet/<int:user_id>', views.cabinet, name='cabinet_page'),
     path('single_news/<int:id>', views.single_news, name='single_news_page'),
     path('ask_doctor/<int:doc_id>', views.ask_doctor, name='ask_doctor_page'),
+    path('add_doctor/', views.add_new_doctor, name='add_doctor_page'),
 
 
     path('chat/<str:room_name>/', views.user_chat, name='user_chat_page'),

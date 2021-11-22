@@ -81,6 +81,35 @@ def registration(request):
                                                  'about_us': about_us,})
 
 
+def add_new_doctor(request, err=None):
+    if request.method == 'POST':
+        if request.POST['password1'] == request.POST['password2']:
+            if User.objects.filter(
+                    Q(username=request.POST['username']) |
+                    Q(email=request.POST['email'])).exists():
+                err = 'Такой пользователь или телефон/email уже зарегистрированы'
+                return render(request, 'registrate_doctor.html', {'err': err})
+
+            new_user = User.objects.create_user(
+                username=request.POST['username'],
+                password=request.POST['password1'],
+                email=request.POST['email'],
+            )
+            new_doctor = DoctorCard.objects.create(
+                first_name=request.POST['first_name'],
+                last_name=request.POST['last_name'],
+                patronymic=request.POST['patronymic'],
+                user=new_user,
+                email=request.POST['email'],
+                phone=request.POST['phone'],
+                description=request.POST['description'],
+                specialization=request.POST['specialization'],
+            )
+            return redirect('cabinet_page', user_id=request.user.id)
+
+    return render(request, 'registrate_doctor.html', {})
+
+
 def contact(request):
     about_us = AboutUs.objects.all()
 
