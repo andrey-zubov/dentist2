@@ -1,10 +1,6 @@
-* запуск в первый раз:
->* pip install -r requirements.txt
->* cd dentist2
->* python manage.py makekigrations website
->* python manage.py migrate
->* python manage.py createsuperuser
->>* заполнить поля
+* Билд:
+>* docker-compose build
 
-Поднять сервер:
-* python manage.py runserver
+
+* Запустить контейнеры:
+>* docker-compose up

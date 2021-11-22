@@ -1,0 +1,1 @@
+SECRET_KEY=o+2p8ctie=adeomar3$b+l=-)x2#wufaruka8+#j&=)p$5odaud#f4*phb!

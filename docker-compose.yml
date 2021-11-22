@@ -1,0 +1,35 @@
+version: '3.6'
+
+services:
+  dentist_app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: dentist
+    tty: true
+    restart: always
+    volumes:
+      - ./:/src
+    env_file:
+      - my_env.txt
+    ports:
+      - 8000:8000
+    depends_on:
+      - redis
+    networks:
+      - mynetwork
+    command: sh -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+
+  redis:
+    image: redis
+    container_name: my_redis
+    hostname: redis1
+    restart: on-failure
+    ports:
+      - 6379:6379
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
