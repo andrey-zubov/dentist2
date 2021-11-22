@@ -156,6 +156,7 @@ class Appointment(models.Model):
         return reverse('appoinment_report_page', kwargs={'a_id': self.id})
 
 
+
 class AboutUs(models.Model):
     image = models.ImageField(upload_to='website/',
                               blank=True,

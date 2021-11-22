@@ -17,7 +17,11 @@
           <!-- Single Dentist Area -->
           <div class="col-12 col-sm-6 col-md-4">
             <div class="single-dentist-area mb-100">
-              <img src="{{ doc.image.url }}" alt="" width="400" height="400">
+              {% if doc.image %}
+                <img src="{{ doc.image.url }}" alt="" width="400" height="400">
+              {% else %}
+                <img src="/media/website/doc.jpg" alt="" width="400" height="400">
+              {% endif %}
               <!-- Dentist Content -->
               <div class="dentist-content">
                 <!-- Dentist Info -->
