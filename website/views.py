@@ -243,10 +243,12 @@ def cabinet(request, user_id):
     elif Administrator.objects.filter(user_id=user_id).exists():
         administrator = Administrator.objects.get(user_id=user_id)
         clients = Client.objects.all()
+        doctors = DoctorCard.objects.all()
 
         return render(request, 'administrator_cabinet.html', {'about_us': about_us,
                                                               'administrator': administrator,
-                                                              'clients': clients})
+                                                              'clients': clients,
+                                                              'doctors': doctors})
 
 
 def ajax_save_question(request):
@@ -270,6 +272,24 @@ def ajax_save_client(request):
 
 def ajax_delete_client(request):
     Client.objects.get(id=request.POST['client_id']).delete()
+    return HttpResponse(1)
+
+
+def ajax_save_doctor(request):
+    doctor = DoctorCard.objects.get(id=request.POST['doctor_id'])
+    doctor.first_name = request.POST['first_name']
+    doctor.last_name = request.POST['last_name']
+    doctor.patronymic = request.POST['patronymic']
+    doctor.email = request.POST['email']
+    doctor.phone = request.POST['phone']
+    doctor.description = request.POST['description']
+    doctor.specialization = request.POST['specialization']
+    doctor.save()
+    return HttpResponse(1)
+
+
+def ajax_delete_doctor(request):
+    DoctorCard.objects.get(id=request.POST['dorcotr_id']).delete()
     return HttpResponse(1)
 
 
