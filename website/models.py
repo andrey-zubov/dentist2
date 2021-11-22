@@ -51,6 +51,7 @@ class Client(models.Model):
                                        verbose_name='Специальное сообзение от администрации')
 
     def delete(self, using=None, keep_parents=False):
+        User.objects.get(id=self.user_id)
         return super().delete(using, keep_parents)
 
     def __str__(self):
@@ -88,6 +89,10 @@ class DoctorCard(models.Model):
     description = models.TextField(verbose_name='Описание')
     specialization = models.CharField(verbose_name='специалтзация',
                                       max_length=64)
+
+    def delete(self, using=None, keep_parents=False):
+        User.objects.get(id=self.user_id)
+        return super().delete(using, keep_parents)
 
     def __str__(self):
         return f'{self.last_name} {self.first_name} {self.patronymic}'

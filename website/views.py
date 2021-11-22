@@ -118,8 +118,9 @@ def contact(request):
             message_name = request.POST['message-name']
             message_email = request.POST['message-email']
         else:
-            message_name = request.user.first_name
-            message_email = request.user.email
+            client = Client.objects.get(user_id=request.user.id)
+            message_name = client.first_name
+            message_email = client.email
         message = request.POST['message']
 
         new_mention = Mention.objects.create(content=message,
