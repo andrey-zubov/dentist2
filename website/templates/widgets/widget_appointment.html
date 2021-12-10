@@ -22,8 +22,8 @@
                 <div class="row">
                   <div class="col-md-8">
                     <div class="form-group mb-30">
-                      <select name="clinic" class="form-control">
-                        <option>Выберите клинику</option>
+                      <select name="clinic" class="form-control" required>
+                        <option value="">Выберите клинику</option>
                         {% for clinic in about_us %}
                           <option value="{{clinic.id}}">{{clinic.title}}</option>
                         {% endfor %}
@@ -32,8 +32,8 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-30">
-                      <select name="service" class="form-control">
-                        <option>Выберите услугу</option>
+                      <select name="service" class="form-control" required>
+                        <option value="">Выберите услугу</option>
                         {% for serv in services %}
                           <option value="{{serv.id}}">{{serv.title}}</option>
                         {% endfor %}
@@ -42,8 +42,8 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-30">
-                      <select name="doctor" class="form-control">
-                        <option>Выберите врача</option>
+                      <select name="doctor" class="form-control" required>
+                        <option value="">Выберите врача</option>
                         {% for doctor in doctors %}
                           <option value="{{doctor.id}}">{{doctor}}</option>
                         {% endfor %}
@@ -52,12 +52,12 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-30">
-                      <input name="time" type="time" class="form-control">
+                      <input name="time" type="time" class="form-control" required>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-30">
-                      <input name="date" type="date" class="form-control">
+                      <input name="date" type="date" class="form-control" required>
                     </div>
                   </div>
                   <div class="col-12">
