@@ -34,17 +34,17 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="name" type="text" class="form-control" placeholder="Имя" value="{{client.first_name}}">
+                    <input name="name" type="text" class="form-control" placeholder="Имя" value="{{client.first_name}}" style="font-size: 24px">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="surname" type="text" class="form-control" placeholder="Фамилия" value="{{client.last_name}}">
+                    <input name="surname" type="text" class="form-control" placeholder="Фамилия" value="{{client.last_name}}" style="font-size: 24px">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="patronymic" type="text" class="form-control" placeholder="Отчество" value="{{client.patronymic}}">
+                    <input name="patronymic" type="text" class="form-control" placeholder="Отчество" value="{{client.patronymic}}" style="font-size: 24px">
                   </div>
                 </div>
                 <!-- Contact Info -->
@@ -53,17 +53,17 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="email" type="email" class="form-control" placeholder="почта" value="{{client.email}}">
+                    <input name="email" type="email" class="form-control" placeholder="почта" value="{{client.email}}" style="font-size: 24px">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="tel" type="text" class="form-control" placeholder="номер телефона" value="{{client.phone}}">
+                    <input name="tel" type="text" class="form-control" placeholder="номер телефона" value="{{client.phone}}" style="font-size: 24px">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-30">
-                    <input name="address" type="text" class="form-control" placeholder="адрес" value="{{client.address}}">
+                    <input name="address" type="text" class="form-control" placeholder="адрес" value="{{client.address}}" style="font-size: 24px">
                   </div>
                 </div>
                 <div class="col-12 text-center">
@@ -108,13 +108,13 @@
     </div>
     <!-- Client Questions End -->
 
-    <div class="row">
-      <div class="col-12">
-        <div class="text-center white">
-          <h1>Мои записи</h1>
-        </div>
-      </div>
-    </div>
+<!--    <div class="row">-->
+<!--      <div class="col-12">-->
+<!--        <div class="text-center white">-->
+<!--          <h1>Мои записи</h1>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
     <div class="row">
       <div class="col-12">
@@ -135,6 +135,7 @@
                     <th scope="col">Цена</th>
                     <th scope="col">Ваш коментарий</th>
                     <th scope="col">Рзультат</th>
+                    <th scope="col">Действие</th>
                   </tr>
                 </thead>
                 {% for a in user_appointment %}
@@ -151,6 +152,9 @@
                       {% else %}
                         <th scope="row">Результата пока нет</th>
                       {% endif %}
+                      <th scope="row">
+                        <input type="button" value="Удалить">
+                      </th>
                     </tr>
                   </tbody>
                 {% endfor %}

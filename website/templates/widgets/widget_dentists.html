@@ -25,12 +25,19 @@
               <!-- Dentist Content -->
               <div class="dentist-content">
                 <!-- Dentist Info -->
-                <a href="{{doc.ask_doctor}}">
+                {% if user.is_authenticated %}
+                  <a href="{{doc.ask_doctor}}">
+                    <div class="dentist-info bg-gradient-overlay">
+                      <h5>{{ doc.first_name }}</h5>
+                      <p>{{ doc.specialization }}</p>
+                    </div>
+                  </a>
+                {% else %}
                   <div class="dentist-info bg-gradient-overlay">
                     <h5>{{ doc.first_name }}</h5>
                     <p>{{ doc.specialization }}</p>
                   </div>
-                </a>
+                {% endif %}
               </div>
             </div>
           </div>
