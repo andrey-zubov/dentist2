@@ -120,6 +120,50 @@
       </div>
       <!-- doctors admin end -->
 
+      <!-- appointments admin start -->
+      <div class="col-12">
+        <div class="text-center">
+          <h1>Записи к врачу <a href="{% url 'booknow' %}" class="dento-btn">Записать к врачу</a></h1>
+        </div>
+      </div>
+      <div class="dento-price-table table-responsive">
+        <table class="table table-borderless mb-0">
+          <thead>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Телефон</th>
+            <th scope="col">Услуга</th>
+            <th scope="col">Врач</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Время</th>
+          </thead>
+          {% for appointment in appointments %}
+            <tbody id="table_{{appointment.id}}">
+              <form action="" class="appointment_administration" id="form_{{appointment.id}}">
+                {% csrf_token %}
+                <th scope="col">
+                  <input name="appointment_id" value="{{appointment.id}}" readonly style="display: none">
+                  <input name="last_name" value="{{appointment.client.last_name}}" readonly size="12px">
+                </th>
+                <th scope="col"><input name="first_name" value="{{appointment.client.first_name}}" readonly size="12px"></th>
+                <th scope="col"><input name="patronymic" value="{{appointment.client.patronymic}}" readonly size="12px"></th>
+                <th scope="col"><input name="phone" value="{{appointment.client.phone}}" readonly size="12px"></th>
+                <th scope="col"><input name="description" value="{{appointment.service}}" readonly></th>
+                <th scope="col"><input name="specialization" value="{{appointment.doctor}}" readonly></th>
+                <th scope="col"><input name="specialization" value="{{appointment.date}}" readonly></th>
+                <th scope="col"><input name="specialization" value="{{appointment.time}}" readonly></th>
+                <th scope="col">
+                  <input type="button" id="delete_{{appointment.id}}" value="Удалить" class="delete_appointment">
+                </th>
+              </form>
+            </tbody>
+          {% endfor %}
+        </table>
+      </div>
+      <!-- appointments admin end -->
+
+
     </div>
   </div>
 </section>

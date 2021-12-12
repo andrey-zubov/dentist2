@@ -40,4 +40,5 @@ urlpatterns = [
     path('ajax_delete_client', views.ajax_delete_client),
     path('ajax_save_doctor', views.ajax_save_doctor),
     path('ajax_delete_doctor', views.ajax_delete_doctor),
+    path('ajax_delete_appointment', views.ajax_delete_appointment),
 ]

@@ -119,10 +119,33 @@ $(document).ready(function () {
             $.ajax({
                 'type': 'post',
                 'data': {
-                    'client_id': doctor_id,
+                    'doctor_id': doctor_id,
                     'csrfmiddlewaretoken': csrf,
                 },
                 'url': '/ajax_delete_doctor',
+                success: function (suc) {
+                    console.log('suc');
+                },
+                error: function (err) {
+                    console.log(err);
+                },
+            });
+        };
+    });
+
+    $('.delete_appointment').click(function (f) {
+        if (confirm('Вы действительно хотите удалить прием у врача?')) {
+            let appointment_id = $(this).attr('id').split('_')[1]
+            let csrf = $('input[name="csrfmiddlewaretoken"]').val();
+            $('#table_' + appointment_id).hide()
+
+            $.ajax({
+                'type': 'post',
+                'data': {
+                    'appointment_id': appointment_id,
+                    'csrfmiddlewaretoken': csrf,
+                },
+                'url': '/ajax_delete_appointment',
                 success: function (suc) {
                     console.log('suc');
                 },
