@@ -16,10 +16,12 @@ def home(request):
     services = Service.objects.all()
     mentions = Mention.objects.all().reverse()[:3]
     news = News.objects.all().reverse()[:3]
+    clients = Client.objects.all()
     return render(request, 'home.html', {'about_us': about_us,
                                          'doctors': doctors,
                                          'services': services,
                                          'mentions': mentions,
+                                         'clients': clients,
                                          'news': news})
 
 
@@ -169,7 +171,10 @@ def appointment(request):
         date = datetime.strptime(request.POST['date'], '%Y-%m-%d')
         serv = Service.objects.get(id=request.POST['service'])
         doctor = DoctorCard.objects.get(id=request.POST['doctor'])
-        client = Client.objects.get(user_id=request.user.id)
+        if request.user.is_staff:
+            client = Client.objects.get(user_id=request.POST['client_id'])
+        else:
+            client = Client.objects.get(user_id=request.user.id)
 
         new_appointment = Appointment.objects.create(
             date=date,
@@ -204,12 +209,14 @@ def appointment(request):
 
 def booknow(request):
     about_us = AboutUs.objects.all()
+    clients = Client.objects.all()
 
     serv = Service.objects.all()
     doctors = DoctorCard.objects.all()
     return render(request, 'booknow.html', {'services': serv,
                                             'doctors': doctors,
-                                            'about_us': about_us,})
+                                            'about_us': about_us,
+                                            'clients': clients})
 
 
 def single_news(request, id):

@@ -20,6 +20,19 @@
               <form action="{% url 'appointment' %}" method="post">
                 {% csrf_token %}
                 <div class="row">
+                  {% if user.is_staff %}
+                    <div class="col-md-8">
+                      <div class="form-group mb-30">
+                        <select name="client_id" class="form-control" required>
+                          <option value="">Выберите клиента</option>
+                          {% for client in clients %}
+                            <option value="{{client.id}}">{{client}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                  {% endif %}
+
                   <div class="col-md-8">
                     <div class="form-group mb-30">
                       <select name="clinic" class="form-control" required>
