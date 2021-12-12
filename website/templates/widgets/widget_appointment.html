@@ -69,7 +69,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-30">
-                      <input name="date" type="date" class="form-control" required>
+                      <input id="datefield" name="date" type="date" min="1900-01-01" max="2100-01-01" class="form-control" required>
                     </div>
                   </div>
                   <div class="col-12">
@@ -89,3 +89,24 @@
     </section>
   {% endif %}
   <!-- Book An Oppointment Area End -->
+
+<script>
+  $(document).ready(function () {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+       dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+       mm = '0' + mm;
+    }
+
+    let this_day = yyyy + '-' + mm + '-' + dd;
+    document.getElementById('datefield').setAttribute('min', this_day)
+  })
+
+</script>
